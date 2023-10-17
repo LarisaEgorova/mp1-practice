@@ -40,10 +40,10 @@ int main() {
 		n++;
 	}
 	Massa = (h * w * DVPT * DVP) + //масса задней стенки
-		(2 * hbok * d * DSPT * DSP) +//масса боковых
-		(2 * w * (d - WOODT) * DSPT * DSP) +//масса верхних
+		(2 * h * d * DSPT * DSP) +//масса боковых
+		(2 * w * d * DSPT * DSP) +//масса верхних
 		(h * w * WOOD * WOODT) +//масса дверей
-		(n * ((d - WOODT - DVPT) * (w - DSPT * 2) * DSP * DSPT));// масса полок
+		(n * (d * (w - DSPT * 2) * DSP * DSPT));// масса полок
 	printf("ћасса шкафа с заданными параметрами = %lf кг", Massa);
 	return 0;
 }
