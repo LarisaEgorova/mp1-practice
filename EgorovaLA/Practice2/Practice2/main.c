@@ -4,75 +4,62 @@
 #include <locale.h>
 
 void main() {
-	int randchislK, chisloP, flag, mode, k=0;
+	int randchislK, chisloP, mode, k = 0;
 	int num = 1;
 	int Range = 1000;
-	char ans = ".";
-	char ans1 = ".";
+	char ans;
+
 	setlocale(LC_ALL, "rus");
-	flag = 0;
-	while (flag == 0) {
-		printf("В какой режим сыграть? Загадывает компьютер(1) или вы (2)");
-		scanf("%d", & mode);
-		if ((mode == 1) || (mode == 2))
-			flag = 1;
-		else printf("Введите режим используя цифры в скобках\n");
-	}
-	flag = 0;
+	
+	do {
+		printf("В какой режим сыграть? Загадывает компьютер(1) или вы (2) ");
+		scanf("%d", &mode);
+	} while (mode != 1 && mode != 2);
+
 	if (mode == 1) {
 		srand((unsigned int)time(0));
 		randchislK = (rand() % Range) + num;
-		k++;
-		while (flag==0) {
+		do {
+			k++;
 			printf("Введите число (1,1000)");
 			scanf("%d", &chisloP);
 			if (chisloP == randchislK) {
 				printf("Вы угадали!\n");
 				printf("Колличество попыток %d", k);
-				flag = 1;
+				break;
 			}
 			else if (chisloP > randchislK)
 				printf("Загаданное число меньше\n");
 			else if (chisloP < randchislK)
 				printf("Загаданное число больше\n");
-		}
+		} while (1);
 	}
 	else {
-		while (flag == 0) {
-			printf("Введите число (1,1000)");
-			scanf("%d", &chisloP);
-			if ((chisloP > Range) || (chisloP < 1))
-				printf("Введите число из нужного диапазона");
-			else
-				flag = 1;
-		}
-		flag = 0;
-		while (flag == 0) {
-			srand((unsigned int)time(0));
-			randchislK =num+ rand() % Range;
-			printf("Moe chislo %d\n", randchislK);
-			while ((ans1!='<')|| (ans1 != '>')|| (ans1 != '=')) 
-			{
-				printf("Введите < > = ");
-				scanf("%c",&ans);
-				ans1 = ans;
+		do {
+			printf("Загадайте число (1,1000)");
+			scanf("%d", &chisloP);			
+		} while ((chisloP > Range) || (chisloP < 1));
 
-			}
+		srand((unsigned int)time(0));
+
+		do {			
+			randchislK = num + rand() % (Range-num+1);
+			printf("Я думаю это %d\n", randchislK);
+			k++;
+			printf("Я угадал? Введите (<, >, =), чтобы я понял ");
+			scanf("%*c%c", &ans);			
 			if (ans == '=') {
-				printf("YRA");
-				flag = 1;
+				printf("Я угадал за %d попыток", k);
+				break;
 			}
 			else if (ans == '>') {
-				num = randchislK+1;
+				num = randchislK + 1;
 			}
 			else if (ans == '<') {
-				Range = randchislK;
+				Range = randchislK - 1;
 			}
-			printf("%d %d", num, Range);
-		}
-
-
+		} while (1);
 	}
+
 	return;
-	
 }
