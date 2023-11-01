@@ -5,6 +5,15 @@
 
 #define len 5
 
+int length(int n) {
+	int leng = 0;
+	do {
+		leng++;
+		n /= 10;
+	} while (n);
+	return leng;
+}
+
 void main() {
 	int const low_line = 2, up_line = 5;
 	int n,i,j,number,pep_chiclo;
@@ -52,9 +61,15 @@ void main() {
 	do {
 		bull = 0;
 		cow = 0;
-		printf("¬ведите свою отгадку ");
-		scanf("%d", &pep_chiclo);
 
+		do {
+			printf("¬ведите свою отгадку (все цифры различны) ");
+			scanf("%d", &pep_chiclo);
+			if (length(pep_chiclo) != n)
+				printf("¬аша отгадка не той длины\n");
+			else break;
+		} while (1);
+	
 		for (i = n-1; i >=0; i--) {
 			chislop[i] = pep_chiclo % 10;
 			pep_chiclo = pep_chiclo / 10;
