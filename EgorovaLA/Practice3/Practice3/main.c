@@ -31,13 +31,8 @@ void main() {
 
 	srand((unsigned int)time(0));
 
-	for (i = 0; i < n; i++) {
-		if (i == 0) {
-			number = 1 + rand() % (10 - 1);
-			chislok[i] = number;
-			continue;
-		}
-
+	chislok[0] = 1 + rand() % (10 - 1);
+	for (i = 1; i < n; i++) {
 		do{
 			k = 0;
 			number = rand() % 10;
@@ -78,10 +73,10 @@ void main() {
 		for (i = 0; i < n; i++) { 
 			for (j = 0; j<n; j++) { 
 				if (chislop[i] == chislok[j]) {
-					cow += 1;
+					cow++;
 					if (i == j) {
-						bull += 1;
-						cow -= 1;
+						bull++;
+						cow--;
 					}
 					break;
 				}
