@@ -6,6 +6,7 @@
 
 #define Max_way_size 256
 // C:\Users\egoro\Desktop\test\
+// C:\Users\ITMM-230041\Desktop\test\
 
 typedef struct {
 	char *name;
@@ -41,7 +42,7 @@ int check_way(char* way) {
 	return 1;
 }
 
-void buble_sort(files* arr, int len) {
+void buble_sort(files* arr, int* support, int len) {
 	int max_ind, n;
 	while (len != 0) {
 		max_ind = 0;
@@ -57,44 +58,44 @@ void buble_sort(files* arr, int len) {
 	}
 }
 
-void selection_sort(files* arr, int len) {
+void selection_sort(files* arr, int* support, int len) {
 	int i, j,  min_ind, n;
 	for (i = 0; i < len; i++) {
 		min_ind = i;
 		for (j = i + 1; j < len; j++) {
-			if (arr[min_ind] > arr[j])
+			if (arr[min_ind].size > arr[j].size)
 				min_ind = j;
 		}
 		if (min_ind != i) {
-			n = arr[min_ind];
-			arr[min_ind]=arr[i];
-			arr[i] = n;
+			n = arr[min_ind].size;
+			arr[min_ind].size =arr[i].size;
+			arr[i].size = n;
 		}
 	}
 }
 
-void quick_sort(files* arr, int len, int left, int right) {
+void quick_sort(files* arr, int* support, int len, int left, int right) {
 	int centric, swap, lt, rt, center_ch;
 
 	if (len == 0 || left >= right) {
 		return;
 	}
 	centric = left + (right-left) / 2;
-	center_ch = arr[centric];
+	center_ch = arr[centric].size;
 	lt = left; rt = right;
 	while (lt <= rt) {
-		while (arr[lt] < center_ch) lt++;
-		while (arr[rt] > center_ch) rt--;
+		while (arr[lt].size < center_ch) lt++;
+		while (arr[rt].size > center_ch) rt--;
 		if (lt <= rt) {
-			swap = arr[lt];
-			arr[lt] = arr[rt];
-			arr[rt] = swap;
+			swap = arr[lt].size;
+			arr[lt].size = arr[rt].size;
+			arr[rt].size = swap;
 			lt++;
 			rt--;
 		}
 	}
-	if (left < rt) quick_sort(arr, len, left, rt);
-	if (right > lt) quick_sort(arr, len, lt, right);
+	if (left < rt) quick_sort(arr, len, support, left, rt);
+	if (right > lt) quick_sort(arr, len, support, lt, right);
 }
 
 files* return_arr(char* way, int n) {
@@ -153,14 +154,33 @@ void print_files(files* files_inf, int cf) {
 	printf("Файлы из вашего каталога\n");
 	printf("Имя файла-----------Размер файла\n");
 	for (int i = 0; i < cf; i++) {
-		printf("%s \t\t %llu \n", files_inf[i].name, files_inf[i].size);
+		printf("%s \t\t\t %llu \n", files_inf[i].name, files_inf[i].size);
 	}
 }
 
+void choise_sort(files* files_inf, int* support, int n, int len) {
+	int left, right;
+	int flag = 1;
+	switch (n)
+	{
+	case 1:
+		buble_sort(files_inf, support, n, len);
+		break;
+	case 2:
+		selection_sort(files_inf, support, len);
+		break;
+	case 3:
+		left = 0; right = len - 1;
+		quick_sort(files_inf, support, len, left, right);
+		break;
+	}
+} 
+
 void main() {
 	files* inf_files;
+	int* support_file;
 	char* way;
-	int chek, cfiles, n;
+	int chek, cfiles, n, f;
 	way = (char*)malloc(Max_way_size * sizeof(char));
 	setlocale(LC_ALL, "rus");
 	while (1) {
@@ -169,8 +189,8 @@ void main() {
 		create_way(way);
 		chek = check_way(way);
 		if (chek == 0) {
-			printf("Неверный путь или такого пути не существует");
-			printf("Пожалуйста введите корректный путь");
+			printf("Неверный путь или такого пути не существует\n");
+			printf("Пожалуйста введите корректный путь\n");
 			continue;
 		}
 		cfiles=count_files(way);
@@ -180,15 +200,20 @@ void main() {
 		printf("Сортировка пузырьком - 1\n");
 		printf("Сортировка выбором - 2\n");
 		printf("Быстрая сортировка - 3\n");
-		printf("Завершение - 0\n");
-		while (1) {
-			printf("Вdедите ответ\n");
+		do {
+			printf("Ваш выбор\n");
 			scanf("%d", &n);
-			if (n != 1 || n != 2 || n != 3 || n != 0) {
-				printf("Неверный ввод");
-				continue;
-			}
-			break;
+			if (n == 1 || n == 2 || n == 3) break;
+			printf("Неверный ввод, повторите еще раз\n");
+		} while (1);
+		support_file = (int*)malloc(sizeof(int) * cfiles);
+		for (int i = 0; i < cfiles; i++) {
+			support_file[i] = i;
+		}
+		choise_sort(inf_files, support_file, n, cfiles);
+		print_files(inf_files, cfiles);
+		for (int i = 0; i < cfiles; i++) {
+			printf("%d", support_file[i]);
 		}
 	}
 }
