@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <windows.h>
-#include <fileapi.h>
+#include <time.h>
 #include <string.h>
 #include <locale.h>
 
@@ -10,7 +10,7 @@
 
 typedef struct {
 	char *name;
-	UINT64 size;
+	long size;
 } files;
 
 int count_files(char *way) {
@@ -42,62 +42,6 @@ int check_way(char* way) {
 	return 1;
 }
 
-void buble_sort(files* arr, int* support, int len) {
-	int max_ind, n;
-	while (len != 0) {
-		max_ind = 0;
-		for (int i = 1; i < len; i++) {
-			if (arr[i - 1].size > arr[i].size) {
-				n = arr[i].size;
-				arr[i].size = arr[i - 1].size;
-				arr[i - 1].size = n;
-				max_ind = i;
-			}
-		}
-		len = max_ind;
-	}
-}
-
-void selection_sort(files* arr, int* support, int len) {
-	int i, j,  min_ind, n;
-	for (i = 0; i < len; i++) {
-		min_ind = i;
-		for (j = i + 1; j < len; j++) {
-			if (arr[min_ind].size > arr[j].size)
-				min_ind = j;
-		}
-		if (min_ind != i) {
-			n = arr[min_ind].size;
-			arr[min_ind].size =arr[i].size;
-			arr[i].size = n;
-		}
-	}
-}
-
-void quick_sort(files* arr, int* support, int len, int left, int right) {
-	int centric, swap, lt, rt, center_ch;
-
-	if (len == 0 || left >= right) {
-		return;
-	}
-	centric = left + (right-left) / 2;
-	center_ch = arr[centric].size;
-	lt = left; rt = right;
-	while (lt <= rt) {
-		while (arr[lt].size < center_ch) lt++;
-		while (arr[rt].size > center_ch) rt--;
-		if (lt <= rt) {
-			swap = arr[lt].size;
-			arr[lt].size = arr[rt].size;
-			arr[rt].size = swap;
-			lt++;
-			rt--;
-		}
-	}
-	if (left < rt) quick_sort(arr, len, support, left, rt);
-	if (right > lt) quick_sort(arr, len, support, lt, right);
-}
-
 files* return_arr(char* way, int n) {
 	int i = 0;
 	files* inf_files;
@@ -124,66 +68,192 @@ files* return_arr(char* way, int n) {
 	return inf_files;
 }
 
-void cpy(files* a, files* b, int cf) {
-	int i = 0;
-	for (i; i < cf; i++) {
-		b[i].name = _strdup(a[i].name);
-		b[i].size = a[i].size;
+void buble_sort(long * arr, int* support, int len) {
+	int max_ind, n, ne;
+	while (len != 0) {
+		max_ind = 0;
+		for (int i = 1; i < len; i++) {
+			if (arr[i - 1] > arr[i]) {
+				n = arr[i];
+				ne = support[i];
+				arr[i] = arr[i - 1];
+				support[i] = support[i - 1];
+				arr[i - 1] = n;
+				support[i - 1] = ne;
+				max_ind = i;
+			}
+		}
+		len = max_ind;
 	}
 }
 
-void swap(files* files_inf, int i, int j) {
-	UINT64* a = &files_inf[i].size;
-	UINT64* b = &files_inf[j].size;
-
-	if (*a > *b) {
-		UINT64 tmp = *a;
-		char* tmpw = files_inf[i].name;
-
-		*a = *b;
-		files_inf[i].name = files_inf[j].name;
-		*b = tmp;
-		files_inf[j].name = tmpw;
-
-
+void selection_sort(long * arr, int* support, int len) {
+	int i, j,  min_ind, n, ne;
+	for (i = 0; i < len; i++) {
+		min_ind = i;
+		for (j = i + 1; j < len; j++) {
+			if (arr[min_ind] > arr[j])
+				min_ind = j;
+		}
+		if (min_ind != i) {
+			n = arr[min_ind];
+			ne = support[min_ind];
+			arr[min_ind] =arr[i];
+			support[min_ind] = support[i];
+			arr[i] = n;
+			support[i] = ne;
+		}
 	}
+}
+
+void quick_sort(long * arr, int* support, int len, int left, int right) {
+	int centric, swap, lt, rt, center_ch, swape;
+
+	if (len == 0 || left >= right) {
+		return;
+	}
+	centric = left + (right-left) / 2;
+	center_ch = arr[centric];
+	lt = left; rt = right;
+	while (lt <= rt) {
+		while (arr[lt] < center_ch) lt++;
+		while (arr[rt] > center_ch) rt--;
+		if (lt <= rt) {
+			swap = arr[lt];
+			swape = support[lt];
+			arr[lt] = arr[rt];
+			support[lt] = support[rt];
+			arr[rt] = swap;
+			support[rt] = swape;
+			lt++;
+			rt--;
+		}
+	}
+	if (left < rt) quick_sort(arr, support, len, left, rt);
+	if (right > lt) quick_sort(arr, support, len, lt, right);
+}
+
+long* get_size(files* files_inf, int cf) {
+	long* sizes;
+	sizes= (long*)malloc(sizeof(long) * cf);
+	for (int i = 0; i < cf; i++) {
+		sizes[i] = files_inf[i].size;
+	}
+	return sizes;
 }
 
 void print_files(files* files_inf, int cf) {
-	setlocale(LC_ALL, "rus");
 	printf("Файлы из вашего каталога\n");
 	printf("Имя файла-----------Размер файла\n");
 	for (int i = 0; i < cf; i++) {
-		printf("%s \t\t\t %llu \n", files_inf[i].name, files_inf[i].size);
+		printf("%s %ld \n", files_inf[i].name, files_inf[i].size);
 	}
+	printf("\n");
 }
 
-void choise_sort(files* files_inf, int* support, int n, int len) {
+void print_sort_files(files* files_inf, long* sizes, int* support, int cf) {
+	printf("Сортированные файлы из вашего каталога\n");
+	printf("Имя файла-----------Размер файла\n");
+	int name;
+	for (int i=0; i < cf; i++) {
+		name = support[i];
+		printf("%s %ld \n", files_inf[name].name, sizes[i]);
+	}
+	printf("\n");
+}
+
+double choice_sort(files* files_inf, long* sizes, int k, int len) {
 	int left, right;
 	int flag = 1;
-	switch (n)
+	int* support_file;
+	clock_t t_start;
+	clock_t t_finish;
+	double time_in_work=0;
+
+	support_file = (int*)malloc(sizeof(int) * len);
+
+	for (int i = 0; i < len; i++) {
+		support_file[i] = i;
+	}
+	switch (k)
 	{
 	case 1:
-		buble_sort(files_inf, support, n, len);
+		t_start = clock();
+		buble_sort(sizes, support_file, len);
+		t_finish = clock();
+		time_in_work = (double)((t_finish - t_start)) / CLOCKS_PER_SEC;
+		print_sort_files(files_inf, sizes, support_file, len);
 		break;
 	case 2:
-		selection_sort(files_inf, support, len);
+		t_start = clock();
+		selection_sort(sizes, support_file, len);
+		t_finish = clock();
+		time_in_work = (double)((t_finish - t_start)) / CLOCKS_PER_SEC;
+		print_sort_files(files_inf, sizes, support_file, len);
 		break;
 	case 3:
 		left = 0; right = len - 1;
-		quick_sort(files_inf, support, len, left, right);
+		t_start = clock();
+		quick_sort(sizes, support_file, len, left, right);
+		t_finish = clock();
+		time_in_work = (double)((t_finish - t_start)) / CLOCKS_PER_SEC;
+		print_sort_files(files_inf, sizes, support_file, len);
 		break;
 	}
+	free(support_file);
+	return time_in_work;
 } 
+
+int choice(files* files_inf, long* sizes, int*cfiles) {
+	int n, k;
+	double time_in_work;
+
+	printf("Что вы хотите сделать?\n");
+	printf("1 - вывести файлы из директории\n");
+	printf("2 - отсортировать файлы\n");
+	printf("3 - завершить работу\n");
+	scanf("%d", &n);
+
+	switch (n)
+	{
+	case 1:
+		print_files(files_inf, cfiles);
+		return 1;
+	case 2:
+		printf("Выберите способ сортировки\n");
+		printf("Сортировка пузырьком - 1\n");
+		printf("Сортировка выбором - 2\n");
+		printf("Быстрая сортировка - 3\n");
+		do {
+			printf("Ваш выбор\n");
+			scanf("%d", &k);
+			if (k == 1 || k == 2 || k == 3) break;
+			printf("Неверный ввод, повторите еще раз\n");
+		} while (1);
+		time_in_work = choice_sort(files_inf, sizes, k, cfiles);
+		printf("Время работы сортировки - %lf\n", time_in_work);
+		return 1;
+	case 3:
+		printf("Завершение работы\n");
+		return 0;
+	default:
+		printf("Неверный ввод, попробуйте снова\n");
+		return -1;
+	}
+
+}
 
 void main() {
 	files* inf_files;
-	int* support_file;
+	long*sizes;
 	char* way;
-	int chek, cfiles, n, f;
+	int chek, cfiles, flag=1;
+
 	way = (char*)malloc(Max_way_size * sizeof(char));
+
 	setlocale(LC_ALL, "rus");
-	while (1) {
+
+	while (flag) {
 		printf("Введите путь до каталога\n");
 		scanf("%s", way);
 		create_way(way);
@@ -193,28 +263,17 @@ void main() {
 			printf("Пожалуйста введите корректный путь\n");
 			continue;
 		}
+
 		cfiles=count_files(way);
 		inf_files = return_arr(way, cfiles);
-		print_files(inf_files, cfiles);
-		printf("Выберете способ сортировки\n");
-		printf("Сортировка пузырьком - 1\n");
-		printf("Сортировка выбором - 2\n");
-		printf("Быстрая сортировка - 3\n");
+		sizes=get_size(inf_files, cfiles);
+
 		do {
-			printf("Ваш выбор\n");
-			scanf("%d", &n);
-			if (n == 1 || n == 2 || n == 3) break;
-			printf("Неверный ввод, повторите еще раз\n");
-		} while (1);
-		support_file = (int*)malloc(sizeof(int) * cfiles);
-		for (int i = 0; i < cfiles; i++) {
-			support_file[i] = i;
-		}
-		choise_sort(inf_files, support_file, n, cfiles);
-		print_files(inf_files, cfiles);
-		for (int i = 0; i < cfiles; i++) {
-			printf("%d", support_file[i]);
-		}
+			flag = choice(inf_files, sizes, cfiles);
+		} while (flag != 0);
+
+		free(way);
+		//free(inf_files);
 	}
 }
 
