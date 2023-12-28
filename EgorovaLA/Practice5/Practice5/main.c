@@ -3,6 +3,7 @@
 #include <time.h>
 #include <string.h>
 #include <locale.h>
+#include <malloc.h>
 
 #define Max_way_size 256
 // C:\Users\egoro\Desktop\test\
@@ -42,15 +43,12 @@ int check_way(char* way) {
 	return 1;
 }
 
-files* return_arr(char* way, int n) {
+void return_arr(char* way, files* inf_files) {
 	int i = 0;
-	files* inf_files;
 	WIN32_FIND_DATAA findfile;
 	LARGE_INTEGER fullsize;
 	UINT64 filesize_final;
 	HANDLE hFind = FindFirstFileA(way, &findfile);
-
-	inf_files = (files*)malloc(n * sizeof(files));
 
 	do {
 		fullsize.HighPart = findfile.nFileSizeHigh;
@@ -65,7 +63,6 @@ files* return_arr(char* way, int n) {
 		}
 	} while (FindNextFileA(hFind, &findfile) != NULL);
 	FindClose(hFind);
-	return inf_files;
 }
 
 void buble_sort(long * arr, int* support, int len) {
@@ -133,31 +130,28 @@ void quick_sort(long * arr, int* support, int len, int left, int right) {
 	if (right > lt) quick_sort(arr, support, len, lt, right);
 }
 
-long* get_size(files* files_inf, int cf) {
-	long* sizes;
-	sizes= (long*)malloc(sizeof(long) * cf);
+void get_size(files* files_inf, int cf, long * sizes) {
 	for (int i = 0; i < cf; i++) {
 		sizes[i] = files_inf[i].size;
 	}
-	return sizes;
 }
 
 void print_files(files* files_inf, int cf) {
 	printf("Файлы из вашего каталога\n");
 	printf("Имя файла-----------Размер файла\n");
 	for (int i = 0; i < cf; i++) {
-		printf("%s %ld \n", files_inf[i].name, files_inf[i].size);
+		printf("%s\t %ld \n", files_inf[i].name, files_inf[i].size);
 	}
 	printf("\n");
 }
 
-void print_sort_files(files* files_inf, long* sizes, int* support, int cf) {
+void print_sort_files(files* files_inf, int* support, int cf) {
 	printf("Сортированные файлы из вашего каталога\n");
 	printf("Имя файла-----------Размер файла\n");
 	int name;
 	for (int i=0; i < cf; i++) {
 		name = support[i];
-		printf("%s %ld \n", files_inf[name].name, sizes[i]);
+		printf("%s\t %ld \n", files_inf[name].name, files_inf[name].size);
 	}
 	printf("\n");
 }
@@ -182,14 +176,14 @@ double choice_sort(files* files_inf, long* sizes, int k, int len) {
 		buble_sort(sizes, support_file, len);
 		t_finish = clock();
 		time_in_work = (double)((t_finish - t_start)) / CLOCKS_PER_SEC;
-		print_sort_files(files_inf, sizes, support_file, len);
+		print_sort_files(files_inf, support_file, len);
 		break;
 	case 2:
 		t_start = clock();
 		selection_sort(sizes, support_file, len);
 		t_finish = clock();
 		time_in_work = (double)((t_finish - t_start)) / CLOCKS_PER_SEC;
-		print_sort_files(files_inf, sizes, support_file, len);
+		print_sort_files(files_inf, support_file, len);
 		break;
 	case 3:
 		left = 0; right = len - 1;
@@ -197,7 +191,7 @@ double choice_sort(files* files_inf, long* sizes, int k, int len) {
 		quick_sort(sizes, support_file, len, left, right);
 		t_finish = clock();
 		time_in_work = (double)((t_finish - t_start)) / CLOCKS_PER_SEC;
-		print_sort_files(files_inf, sizes, support_file, len);
+		print_sort_files(files_inf, support_file, len);
 		break;
 	}
 	free(support_file);
@@ -231,7 +225,7 @@ int choice(files* files_inf, long* sizes, int*cfiles) {
 			printf("Неверный ввод, повторите еще раз\n");
 		} while (1);
 		time_in_work = choice_sort(files_inf, sizes, k, cfiles);
-		printf("Время работы сортировки - %lf\n", time_in_work);
+		printf("Время работы сортировки - %.5lf\n", time_in_work);
 		return 1;
 	case 3:
 		printf("Завершение работы\n");
@@ -240,16 +234,17 @@ int choice(files* files_inf, long* sizes, int*cfiles) {
 		printf("Неверный ввод, попробуйте снова\n");
 		return -1;
 	}
-
 }
 
 void main() {
 	files* inf_files;
 	long*sizes;
 	char* way;
-	int chek, cfiles, flag=1;
+	int chek, cfiles=0, flag=1;
 
 	way = (char*)malloc(Max_way_size * sizeof(char));
+	sizes = (long*)malloc(cfiles * sizeof(long));
+	inf_files = (files*)malloc(cfiles * sizeof(files));
 
 	setlocale(LC_ALL, "rus");
 
@@ -265,16 +260,21 @@ void main() {
 		}
 
 		cfiles=count_files(way);
-		inf_files = return_arr(way, cfiles);
-		sizes=get_size(inf_files, cfiles);
+		inf_files = realloc(inf_files, cfiles * sizeof(files));
+		return_arr(way, inf_files);
+		sizes = realloc(sizes,cfiles * sizeof(long));
 
 		do {
+			get_size(inf_files, cfiles, sizes);
 			flag = choice(inf_files, sizes, cfiles);
 		} while (flag != 0);
-
-		free(way);
-		//free(inf_files);
 	}
+	free(way);
+	free(sizes);
+	for (int i = 0; i < cfiles; i++) {
+		free(inf_files[i].name);
+	}
+	free(inf_files);
 }
 
 
