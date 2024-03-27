@@ -31,6 +31,8 @@ public:
 	int GetFlat();
 	void SetFlat(int flat);
 
+	const Adress& operator= (const Adress&);
+
 private:
 	int indx;
 	string country;

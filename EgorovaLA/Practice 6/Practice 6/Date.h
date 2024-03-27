@@ -5,6 +5,8 @@
 #include <string>
 #include <exception>
 
+using namespace std;
+
 class Date
 {
 public:
@@ -17,6 +19,7 @@ public:
 	void SetMonth(int);
 	int GetYear();
 	void SetYear(int);
+	const Date& operator =(const Date&);
 
 private:
 	int day;

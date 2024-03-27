@@ -6,13 +6,16 @@
 
 class Student {
 public:
-	Student(Date&, FIO&, Adress&, int, string&);
+	Student(FIO&,int,string,Date&,Adress&);
 	Student(const Student&);
+	Student();
+	//friend ifstream& operator >>(ifstream& in, Student& s);
+	//friend ostream& operator <<(ostream& out, const Student& s);
+	const Student& operator =(const Student&);
 private:
-	Date birth;
-	FIO names;
-	Adress adress;
+	FIO fio;
 	int numberK;
 	string gender;
+	Date birth;
+	Adress adress;
 };
-

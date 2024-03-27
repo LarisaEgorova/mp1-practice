@@ -24,7 +24,8 @@ Adress::Adress(const Adress& ad) {
 	this->flat = ad.flat;
 }
 
-Adress::Adress(){}
+Adress::Adress(){
+}
 
 int Adress :: GetIndx(){
 	return this -> indx;
@@ -80,4 +81,8 @@ int Adress::GetFlat() {
 }
 void Adress::SetFlat(int flat) {
 	this->flat = flat;
+}
+
+const Adress& Adress :: operator= (const Adress&) {
+	return *this;
 }

@@ -7,10 +7,16 @@
 
 using namespace std;
 
+void definition() {
+	;
+}
+
 int main() {
 	setlocale(LC_ALL, "ru");
 	ifstream in;
 	in.open("base.txt");
+	Student s1;
+
 	string n[16];
 	for (int i = 0; i < 16; i++) {
 		getline(in, n[i], '\t');
@@ -20,14 +26,7 @@ int main() {
 	}
 	in.close();
 
-	Date d (stoi(n[5]), stoi(n[6]), stoi(n[7]));
-	Adress a(stoi(n[8]), n[9], n[10], n[11], n[12], n[13], stoi(n[14]), stoi(n[15]));
-	FIO fio(n[0],n[1], n[2]);
-	Student st(d, fio, a, stoi(n[3]), n[4]);
 
-	string name = fio.GetName();
-	int day = d.GetDay();
-	string f = a.GetDistrict();
 	
 
 	

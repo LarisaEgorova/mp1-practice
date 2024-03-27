@@ -19,6 +19,7 @@ public:
 	void SetName(string);
 	void SetSurname(string);
 	void SetFathersname(string);
+	const FIO& operator =(const FIO&);
 private:
 	string Name;
 	string Surname;

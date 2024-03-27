@@ -32,3 +32,10 @@ void FIO::SetSurname(string surname){
 void FIO::SetFathersname(string fathersname) {
 	this->Fathersname = fathersname;
 }
+
+const FIO& FIO :: operator =(const FIO&fio) {
+	this->Name = fio.Name;
+	this->Surname = fio.Surname;
+	this->Fathersname = fio.Fathersname;
+	return *this;
+}

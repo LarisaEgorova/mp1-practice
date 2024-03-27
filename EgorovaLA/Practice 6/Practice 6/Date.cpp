@@ -13,6 +13,9 @@ Date::Date(const Date& date) {
 }
 
 Date::Date() {
+	this->day = 0;
+	this->month = 0;
+	this->year = 0;
 }
 
 int Date :: GetDay() {
@@ -32,4 +35,11 @@ int Date::GetYear() {
 }
 void Date::SetYear(int year) {
 	this->year = year;
+}
+
+const Date& Date :: operator =(const Date& date) {
+	this->day = day;
+	this->month = month;
+	this->year = year;
+	return *this;
 }
