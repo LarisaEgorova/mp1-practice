@@ -4,9 +4,15 @@
 
 class Klass {
 public:
-	Klass(Student*, int, int);
+	Klass(int n);
+	Klass(const Klass&);
+	Klass();
+	~Klass();
+	void SetStudents(int, Student&);
+	Student GetStudents(int) const;
+	Student* GetStudents() const;
+	friend ostream& operator <<(ostream& out, const Klass& K);
 private:
-	Student* students;
 	int count;
-	int number;
+	Student* students;
 };

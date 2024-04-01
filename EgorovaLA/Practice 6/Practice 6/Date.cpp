@@ -18,19 +18,19 @@ Date::Date() {
 	this->year = 0;
 }
 
-int Date :: GetDay() {
+int Date :: GetDay () const {
 	return this->day;
 }
 void Date::SetDay(int day) {
 	this->day = day;
 }
-int Date::GetMonth() {
+int Date::GetMonth() const {
 	return this->month;
 }
 void Date::SetMonth(int month) {
 	this->month = month;
 }
-int Date::GetYear() {
+int Date::GetYear() const {
 	return this->year;
 }
 void Date::SetYear(int year) {
@@ -38,8 +38,18 @@ void Date::SetYear(int year) {
 }
 
 const Date& Date :: operator =(const Date& date) {
-	this->day = day;
-	this->month = month;
-	this->year = year;
+	this->day = date.day;
+	this->month = date.month;
+	this->year = date.year;
 	return *this;
+}
+
+ifstream& operator >>(ifstream& in, Date& date) {
+	in >> date.day >>date.month >>date.year ;
+	return in;
+}
+
+ostream& operator <<(ostream& out, const Date& date) {
+	out << date.day << "." << date.month << "." << date.year<<endl;
+	return out;
 }

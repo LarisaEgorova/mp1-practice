@@ -4,6 +4,7 @@
 #include <locale.h>
 #include <string>
 #include <exception>
+#include <fstream>
 
 using namespace std;
 
@@ -14,25 +15,26 @@ public:
 		string, string, int, int);
 	Adress(const Adress&);
 	Adress();
-	int GetIndx();
+	int GetIndx() const;
 	void SetIndx(int indx);
-	string GetCountry();
+	string GetCountry() const;
 	void SetCountry(string country);
-	string GetRegion();
+	string GetRegion() const;
 	void SetRegion(string region);
-	string GetCity();
+	string GetCity() const;
 	void SetCity(string city);
-	string GetDistrict();
+	string GetDistrict() const;
 	void SetDistrict(string district);
-	string GetStreet();
+	string GetStreet() const;
 	void SetStreet(string street);
-	int GetHouse();
+	int GetHouse()const;
 	void SetHouse(int house);
-	int GetFlat();
+	int GetFlat()const;
 	void SetFlat(int flat);
 
-	const Adress& operator= (const Adress&);
-
+	const Adress& operator = (const Adress&);
+	friend ifstream& operator >>(ifstream& in, Adress& ad);
+	friend ostream& operator <<(ostream& out, const Adress& ad);
 private:
 	int indx;
 	string country;

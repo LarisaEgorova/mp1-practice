@@ -1,33 +1,33 @@
-#include <iostream>
-#include <locale.h>
-#include <string>
-#include <exception>
-#include <fstream>
-#include "Student.h"
-
-using namespace std;
-
-void definition() {
-	;
-}
+#include "Klass.h"
+#include "Sorts and function.h"
 
 int main() {
 	setlocale(LC_ALL, "ru");
 	ifstream in;
-	in.open("base.txt");
-	Student s1;
+	in=work_with_base();
+	int count, klases=0;
 
-	string n[16];
-	for (int i = 0; i < 16; i++) {
-		getline(in, n[i], '\t');
+	in >> count;
+	in >> klases;
+
+	Student s;
+	Klass Kmass (count);
+
+	int *quantity = append_klassmass(in, count, klases, s, Kmass);
+
+	Klass* LibKlasses = (Klass*) operator new(sizeof(Klass)*klases);
+	for (int j = 0; j < klases; j++) {
+		new(&LibKlasses[j]) Klass(quantity[j]);
 	}
-	for (int i = 0; i < 16; i++) {
-		cout << n[i] << " ";
+	
+	separate_klassmass(quantity, LibKlasses, Kmass, klases, count);
+	menu(LibKlasses, quantity, klases);
+
+	cout << "Завершение...";
+
+	delete[] quantity;
+	for (int i = 0; i < klases; i++) {
+		LibKlasses[i].~Klass();
 	}
-	in.close();
-
-
-	
-
-	
+	operator delete(LibKlasses);
 }
