@@ -1,8 +1,11 @@
 #include "Klass.h"
-#include "Sorts and function.h"
+#include "Function.h"
 
 int main() {
-	setlocale(LC_ALL, "ru");
+
+	setlocale(LC_ALL, "rus");
+	SetConsoleCP(1251);
+
 	ifstream in;
 	in=work_with_base();
 	int count, klases=0;
@@ -13,7 +16,7 @@ int main() {
 	Student s;
 	Klass Kmass (count);
 
-	int *quantity = append_klassmass(in, count, klases, s, Kmass);
+	int *quantity = append_klassmass(in, count, klases, Kmass);
 
 	Klass* LibKlasses = (Klass*) operator new(sizeof(Klass)*klases);
 	for (int j = 0; j < klases; j++) {

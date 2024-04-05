@@ -1,29 +1,28 @@
-#include "Sorts and function.h"
+#include "Function.h"
 
-void quick_sort(Student* arrs, int* support, int len, int left, int right) {
-	if (len == 0 || left >= right) return;
+void quick_sort(FIO* arrs, int* support, int left, int right) {
 	int centric = left + (right - left) / 2;
-	FIO center_el = arrs[centric].GetFIO();
+	FIO center_el = arrs[centric];
 	int lt = left;
 	int rt = right;
 	FIO swap;
 	int  swape;
 	while (lt <= rt) {
-		while (arrs[lt].GetFIO() < center_el) lt++;
-		while (arrs[rt].GetFIO() > center_el) rt--;
+		while (arrs[lt] < center_el) lt++;
+		while (arrs[rt] > center_el) rt--;
 		if (lt <= rt) {
-			swap = arrs[lt].GetFIO();
+			swap = arrs[lt];
 			swape = support[lt];
-			arrs[lt].GetFIO() = arrs[rt].GetFIO();
+			arrs[lt] = arrs[rt];
 			support[lt] = support[rt];
-			arrs[rt].GetFIO() = swap;
+			arrs[rt] = swap;
 			support[rt] = swape;
 			lt++;
 			rt--;
 		}
 	}
-	if (left < rt) quick_sort(arrs, support, len, left, rt);
-	if (right > lt) quick_sort(arrs, support, len, lt, right);
+	if (left < rt) quick_sort(arrs, support, left, rt);
+	if (right > lt) quick_sort(arrs, support, lt, right);
 }
 
 void selection_sort(FIO* arrs, int* support, int len) {
@@ -56,32 +55,93 @@ ifstream work_with_base() {
 				cout<<"Неверный путь. Файла не существует\n";
 				continue;
 			}
-			if (check_base() == 0) {
-				cout<<"В базе некорректные данные\n";
-				continue;
-			}
 			f = 0;
 	}
 	return in;
 }
 
-int check_base() {
-	return 1;
+void changes(int ex, int i, Student &s) {
+	cout << "У ученика " << i
+		<< " некорректные данные, пожалуйста замените их на верные\n";
+	Date d(s.GetDate());
+	int change = 0;
+	string changeS = "";
+	switch (ex) {
+	case 1:
+		cout << "Сейчас " << d << "\n";
+		cout << "Введите верный год" << "\n";
+		cin >> change;
+		d.SetYear(change);
+		s.SetDate(d);
+		break;
+	case 2:
+		cout << "Сейчас " << d << "\n";
+		cout << "Введите верный месяц" << "\n";
+		cin >> change;
+		d.SetMonth(change);
+		s.SetDate(d);
+		break;
+	case 3:
+		cout << "Сейчас " << d << "\n";
+		cout << "Введите верный день" << "\n";
+		cin >> change;
+		d.SetDay(change);
+		s.SetDate(d);
+		break;
+	case 4:
+		cout << "Сейчас " << s.GetG() << "\n";
+		cout << "Введите верный пол " << "\n";
+		cin >> changeS;
+		s.SetG(changeS);
+		break;
+	case 5:
+		cout << "Сейчас " << s.GetNum() << "\n";
+		cout << "Введите верный класс " << "\n";
+		cin >> change;
+		s.SetNum(change);
+	}
 }
 	
-int* append_klassmass(ifstream &in, int count, int klases, Student &s, Klass &Kmass) {
+int* append_klassmass(ifstream &in, int count, int klases, Klass &Kmass) {
+	Student s;
 	int* quantity = new int[klases];
 	for (int i = 0; i < klases; i++) {
 		quantity[i] = 0;
 	}
 	for (int i = 0; i < count; i++) {
 		in >> s;
+		int f = 1;
+		while (f) {
+			try {
+				f=check_student(s, klases);
+			}
+			catch (int ex) {
+				changes(ex, i, s);
+			}
+		}
 		int ks = s.GetNum();
 		quantity[ks - 1] += 1;
 		Kmass.SetStudents(i, s);
 	}
 	in.close();
 	return quantity;
+}
+
+int check_student(Student &s, int klases) {
+	Date d;
+	d = s.GetDate();
+	string G = s.GetG();
+	int K = s.GetNum();
+	if (K<1 || K>klases) throw 5;
+	if (G != "Ж" && G != "М" && G != "ж" && G != "м") throw 4;
+	if (d.GetYear() > 2024 || d.GetYear() < 2000) throw 1;
+	if (d.GetMonth() > 12 || d.GetMonth() < 1) throw 2;
+	if (d.GetDay() < 1 || d.GetDay() >31 ||
+		((d.GetMonth() == 4 || d.GetMonth() == 6 || d.GetMonth() == 9 ||
+			d.GetMonth() == 11) && d.GetDay() > 30) ||
+		(d.GetMonth() == 2 && d.GetYear() % 4 == 0 && d.GetDay() > 29) ||
+		(d.GetMonth() == 2 && d.GetYear() % 4 != 0 && d.GetDay() > 28)) throw 3;
+	return 0;
 }
 
 void separate_klassmass(int* quantity, Klass* Lib,Klass Kmass, int klases, int count) {
@@ -105,15 +165,15 @@ int* sorted_klases(int* quantity, int *support, Klass* Lib, int choice) {
 		support[i] = i;
 		fio[i] = Lib[choice - 1].GetStudents(i).GetFIO();
 	}
-	int len = quantity[choice - 1];
-	selection_sort(fio, support, len);
+	int right = quantity[choice - 1]-1;
+	quick_sort(fio, support, 0, right);
 	delete[] fio;
 	return support;
 }
 
 void first_inf_nosort(Klass* Lib, int* quantity, int choice) {
 	for (int i = 0; i < quantity[choice - 1]; i++) {
-		cout << "ID: " << i << " ФИО: " << Lib[choice - 1].GetStudents(i).GetFIO() << "\n" <<
+		cout << "ID: " << i+1 << " ФИО: " << Lib[choice - 1].GetStudents(i).GetFIO() << "\n" <<
 			"Класс: " << Lib[choice - 1].GetStudents(i).GetNum()<< "\n";
 	}
 	return;
@@ -121,7 +181,7 @@ void first_inf_nosort(Klass* Lib, int* quantity, int choice) {
 
 void first_inf_sort(Klass* Lib, int* quantity, int *support, int choice) {
 	for (int i = 0; i < quantity[choice - 1]; i++) {
-		cout <<"ID: "<< support[i] << " ФИО: " << Lib[choice - 1].GetStudents(support[i]).GetFIO() << "\n" <<
+		cout <<"ID: "<< support[i]+1 << " ФИО: " << Lib[choice - 1].GetStudents(support[i]).GetFIO() << "\n" <<
 			"Класс: " << Lib[choice - 1].GetStudents(support[i]).GetNum() << "\n";
 	}
 	return;
@@ -173,8 +233,8 @@ void menu(Klass*Lib, int*quantity, int klases){
 				"Введите уникальный ID ученика\n"
 				<< "Также можете посмотреть другой класс - (-1) или завершить работу (0)\n";
 			cin >> f;
-			if (f != -1 && f != 0 && f <= quantity[choice-1]) {
-				cout << Lib[choice - 1].GetStudents(f)<<"\n";
+			if (f != -1 && f != 0 && f-1 <= quantity[choice-1]) {
+				cout << Lib[choice - 1].GetStudents(f-1)<<"\n";
 				continue;
 			}
 			if (f == -1) {

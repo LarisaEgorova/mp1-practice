@@ -140,7 +140,7 @@
     <ClInclude Include="Adress.h" />
     <ClInclude Include="FIO.h" />
     <ClInclude Include="Klass.h" />
-    <ClInclude Include="Sorts and function.h" />
+    <ClInclude Include="Function.h" />
     <ClInclude Include="Student.h" />
   </ItemGroup>
   <ItemGroup>

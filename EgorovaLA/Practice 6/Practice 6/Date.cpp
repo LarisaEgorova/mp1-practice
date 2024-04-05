@@ -18,7 +18,7 @@ Date::Date() {
 	this->year = 0;
 }
 
-int Date :: GetDay () const {
+int Date::GetDay () const {
 	return this->day;
 }
 void Date::SetDay(int day) {
@@ -45,7 +45,7 @@ const Date& Date :: operator =(const Date& date) {
 }
 
 ifstream& operator >>(ifstream& in, Date& date) {
-	in >> date.day >>date.month >>date.year ;
+	in >> date.day >>date.month >>date.year;
 	return in;
 }
 
