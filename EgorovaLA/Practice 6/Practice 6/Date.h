@@ -3,7 +3,6 @@
 #include <iostream>
 #include <locale.h>
 #include <string>
-#include <exception>
 #include <fstream>
 
 using namespace std;

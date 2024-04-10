@@ -3,9 +3,8 @@
 
 int main() {
 
-	setlocale(LC_ALL, "rus");
 	SetConsoleCP(1251);
-
+	SetConsoleOutputCP(1251);
 	ifstream in;
 	in=work_with_base();
 	int count, klases=0;
@@ -20,7 +19,7 @@ int main() {
 
 	Klass* LibKlasses = (Klass*) operator new(sizeof(Klass)*klases);
 	for (int j = 0; j < klases; j++) {
-		new(&LibKlasses[j]) Klass(quantity[j]);
+		LibKlasses[j] = Klass(quantity[j]);
 	}
 	
 	separate_klassmass(quantity, LibKlasses, Kmass, klases, count);

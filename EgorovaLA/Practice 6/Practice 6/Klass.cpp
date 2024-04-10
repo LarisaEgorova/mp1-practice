@@ -30,10 +30,6 @@ Student Klass::GetStudents(int n) const {
 	return this->students[n];
 }
 
-Student* Klass::GetStudents() const {
-	return this->students;
-}
-
 ostream& operator <<(ostream& out, const Klass& K) {
 	for (int i = 0; i < K.count; i++) {
 		out << K.students[i] << endl;
