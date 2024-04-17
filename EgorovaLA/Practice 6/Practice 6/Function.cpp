@@ -1,63 +1,18 @@
 #include "Function.h"
 
-void quick_sort(FIO* arrs, int* support, int left, int right) {
-	int centric = left + (right - left) / 2;
-	FIO center_el = arrs[centric];
-	int lt = left;
-	int rt = right;
-	FIO swap;
-	int  swape;
-	while (lt <= rt) {
-		while (arrs[lt] < center_el) lt++;
-		while (arrs[rt] > center_el) rt--;
-		if (lt <= rt) {
-			swap = arrs[lt];
-			swape = support[lt];
-			arrs[lt] = arrs[rt];
-			support[lt] = support[rt];
-			arrs[rt] = swap;
-			support[rt] = swape;
-			lt++;
-			rt--;
-		}
-	}
-	if (left < rt) quick_sort(arrs, support, left, rt);
-	if (right > lt) quick_sort(arrs, support, lt, right);
-}
-
-void selection_sort(FIO* arrs, int* support, int len) {
-	for (int i = 0; i < len; i++) {
-		int min_ind = i;
-		for (int j = i + 1; j < len; j++) {
-			if (arrs[min_ind].GetSurname() > arrs[j].GetSurname())
-				min_ind = j;
-		}
-		if (min_ind != i) {
-			FIO n = arrs[min_ind];
-			int ne = support[min_ind];
-			arrs[min_ind] = arrs[i];
-			support[min_ind] = support[i];
-			arrs[i] = n;
-			support[i] = ne;
-		}
-	}
-}
-
-ifstream work_with_base() {
+string* work_with_base(int klases, int& count) {
 	ifstream in;
-	int f = 1;
-	while (f) {
-		cout << "Введите путь к базе данных\n";
-			string way;
-			cin >> way;
-			in.open(way, ios_base::in);
-			if (!in.is_open()) {
-				cout<<"Неверный путь. Файла не существует\n";
-				continue;
-			}
-			f = 0;
+	string *massfile=new string [klases];
+	for (int i=0; i<klases; i++){
+		string way = to_string(i) + ".txt";
+		in.open(way, ios_base::in);
+		if (!in.is_open()) {
+			cout<<"Неверный путь. Файла не существует\n";
+			continue;
+		}
+		count += 1;
 	}
-	return in;
+	return massfile;
 }
 
 void changes(int ex, int i, Student &s) {

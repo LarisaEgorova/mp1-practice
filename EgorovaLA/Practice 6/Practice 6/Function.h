@@ -7,7 +7,7 @@
 
 void quick_sort(FIO* arrs, int* support, int left, int right);
 void selection_sort(FIO* arrs, int* support, int len);
-ifstream work_with_base();
+string* work_with_base(const int, int&);
 int* append_klassmass(ifstream& in, int count, int klases, Klass& Kmass);
 int check_student(Student& s, int klases);
 void separate_klassmass(int* quantity, Klass* Lib, Klass Kmass, int klases, int count);
