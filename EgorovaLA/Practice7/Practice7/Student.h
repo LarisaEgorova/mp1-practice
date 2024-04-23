@@ -13,3 +13,7 @@ typedef struct {
 } Student;
 
 void fillStudent(Student*,FIO*, int, char, Date*, Adress*);
+void inf_Student(Student* S);
+void operatorEQS(Student* s1, Student* s2);
+void allocateStudent(Student* S);
+void deleteStudent(Student* S);

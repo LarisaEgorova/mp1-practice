@@ -11,3 +11,5 @@ typedef struct {
 } Date;
 
 void fillDate(Date*,int, int, int);
+void printDate(Date* date);
+void operatorEQDate(Date* d1, Date *d2);
