@@ -1,16 +1,16 @@
 #include "Student.h"
 
-void fillStudent(Student* S,FIO *fio, int klass, char gender, Date *date, Adress *adress) {
+void fillStudent(Student* S,FIO *fio, int klass, int gender, Date *date, Adress *adress) {
 	operatorEQFIO(&S->fio, fio);
 	S->numberK = klass;
-	S->gender = gender;
+	S->G = gender;
 	operatorEQDate(&S->birth, date);
 	operatorEQAdress(&S->adress, adress);
 }
 
 void operatorEQS(Student* s1, Student *s2) {
 	operatorEQFIO(&s1->fio, &s2->fio);
-	s1->gender = s2->gender;
+	s1->G = s2->G;
 	s1->numberK = s2->numberK;
 	operatorEQDate(&s1->birth, &s2->birth);
 	operatorEQAdress(&s1->adress, &s2->adress);
@@ -28,8 +28,11 @@ void deleteStudent(Student* S) {
 
 void inf_Student(Student* S) {
 	printFIO(&S->fio);
-	printf("Êëàññ %d", S->numberK);
-	printf("%c", S->gender);
+	printf("Êëàññ %d\n", S->numberK);
+	if (S->G == 0) {
+		printf("Ïîë: Ì\n");
+	}
+	else printf("Ïîë: Æ\n");
 	printDate(&S->birth);
 	printAdress(&S->adress);
 }

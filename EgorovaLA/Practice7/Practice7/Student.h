@@ -4,10 +4,15 @@
 #include "Date.h"
 #include "FIO.h"
 
+typedef enum {
+	MALE = 0,
+	FEMALE = 1
+} Gender;
+
 typedef struct {
 	FIO fio;
 	int numberK;
-	char gender;
+	Gender G;
 	Date birth;
 	Adress adress;
 } Student;

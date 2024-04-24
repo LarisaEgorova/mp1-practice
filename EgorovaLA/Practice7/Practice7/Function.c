@@ -24,7 +24,7 @@ int work_base(Klass** Klassmass) {
 
 void first_inf_nosort(Klass* Klass, int choice) {
 	for (int i = 0; i < Klass->count; i++) {
-		printf("ID %d\n", i);
+		printf("ID %d\n", i+1);
 		printf("Класс %d\n", Klass->students[i].numberK);
 		printFIO(&Klass->students[i].fio);
 	}
@@ -33,7 +33,7 @@ void first_inf_nosort(Klass* Klass, int choice) {
 
 void first_inf_sort(Klass* Klass, int* support, int choice) {
 	for (int i = 0; i < Klass->count; i++) {
-		printf("ID %d\n", support[i]);
+		printf("ID %d\n", support[i]+1);
 		printf("Класс %d\n", Klass->students[support[i]].numberK);
 		printFIO(&Klass->students[support[i]].fio);
 	}
@@ -119,7 +119,7 @@ void menu(Klass* Klassmass, int klases) {
 				"Также можете посмотреть другой класс - (-1) или завершить работу (0)\n");
 			scanf("%d", &f);
 			if (f != -1 && f != 0 && f - 1 <= Klassmass[choice - 1].count) {
-				inf_Student(&Klassmass[choice - 1].students[f]);
+				inf_Student(&Klassmass[choice - 1].students[f-1]);
 				continue;
 			}
 			if (f == -1) {
@@ -159,6 +159,7 @@ void append_students(Klass* Klass, char* str, FILE* f) {
 
 	char* s1[16];
 	char* strpart;
+	int gender;
 
 	FIO fio;
 	Date date;
@@ -182,7 +183,10 @@ void append_students(Klass* Klass, char* str, FILE* f) {
 		fillAdress(&adress, atoi(s1[8]), s1[9], s1[10],
 			s1[11], s1[12], s1[13], atoi(s1[14]), atoi(s1[15]));
 
-		fillStudent(&student, &fio, atoi(s1[3]), s1[4], &date, &adress);
+		if (strcmp(s1[4], "Ж")==0) gender = 1;
+		else gender = 0;
+
+		fillStudent(&student, &fio, atoi(s1[3]), gender, &date, &adress);
 
 		fillKlass(Klass, &student, i);
 
