@@ -5,38 +5,37 @@ int main() {
 
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	ifstream in;
-	int count=0, klases=0;
+
+	string* massfile;
+	int klases = 0; int count = 0;
+
 	while (1) {
 		cout << "Введите количество классов\n";
 		cin >> klases;
-		in = work_with_base(klases, count);
+		massfile = new string[klases];
+		count += work_with_base(klases, massfile);
 		if (count != klases) {
 			cout << "Неверное количество классов"
 				<<"Не хватает баз данных\n";
 			continue;
 		}
+		klases = count;
 		break;
 	}
 
 	Student s;
-	Klass Kmass (count);
+	Klass *Kmass =new Klass[count];
 
-	int *quantity = append_klassmass(in, count, klases, Kmass);
-
-	Klass* LibKlasses = (Klass*) operator new(sizeof(Klass)*klases);
-	for (int j = 0; j < klases; j++) {
-		LibKlasses[j] = Klass(quantity[j]);
-	}
+	append_klassmass(massfile, klases, Kmass);
 	
-	separate_klassmass(quantity, LibKlasses, Kmass, klases, count);
-	menu(LibKlasses, quantity, klases);
-
+	menu(Kmass, klases);
+	
 	cout << "Завершение...";
 
-	delete[] quantity;
+	delete[] massfile;
 	for (int i = 0; i < klases; i++) {
-		LibKlasses[i].~Klass();
+		Kmass[i].~Klass();
 	}
-	operator delete(LibKlasses);
+
+	return 0;
 }

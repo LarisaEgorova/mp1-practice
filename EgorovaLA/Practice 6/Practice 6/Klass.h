@@ -10,6 +10,9 @@ public:
 	~Klass();
 	void SetStudents(int, Student&);
 	Student GetStudents(int) const;
+	void SetCount(int);
+	int GetCount() const;
+	void allocateK(int n);
 	friend ostream& operator <<(ostream& out, const Klass& K);
 private:
 	int count;

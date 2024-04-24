@@ -18,19 +18,19 @@ Date::Date() {
 	this->year = 0;
 }
 
-int Date::GetDay () const {
+int Date::GetDay ()  {
 	return this->day;
 }
 void Date::SetDay(int day) {
 	this->day = day;
 }
-int Date::GetMonth() const {
+int Date::GetMonth()  {
 	return this->month;
 }
 void Date::SetMonth(int month) {
 	this->month = month;
 }
-int Date::GetYear() const {
+int Date::GetYear()  {
 	return this->year;
 }
 void Date::SetYear(int year) {

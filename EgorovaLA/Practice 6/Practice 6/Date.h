@@ -13,11 +13,11 @@ public:
 	Date(int, int, int);
 	Date(const Date&);
 	Date();
-	int GetDay() const;
-	void SetDay(int);
-	int GetMonth()const;
-	void SetMonth(int);
-	int GetYear() const;
+	int GetDay();
+	void SetDay(int) ;
+	int GetMonth();
+	void SetMonth(int) ;
+	int GetYear();
 	void SetYear(int);
 
 	const Date& operator =(const Date&);

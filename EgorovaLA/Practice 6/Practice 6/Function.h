@@ -7,11 +7,10 @@
 
 void quick_sort(FIO* arrs, int* support, int left, int right);
 void selection_sort(FIO* arrs, int* support, int len);
-string* work_with_base(const int, int&);
-int* append_klassmass(ifstream& in, int count, int klases, Klass& Kmass);
+int work_with_base(int klases, string* massfile);
+void append_klassmass(string* massfile, int klases, Klass* Kmass);
 int check_student(Student& s, int klases);
-void separate_klassmass(int* quantity, Klass* Lib, Klass Kmass, int klases, int count);
-int* sorted_klases(int* quantity, int* support, Klass* Lib, int choice);
-void first_inf_sort(Klass* Lib, int* quantity, int* support, int choice);
-void first_inf_nosort(Klass* Lib, int* quantity, int choice);
-void menu(Klass* Lib, int* quantity, int klases);
+int* sorted_klases(int* support, Klass* Lib, int choice);
+void first_inf_nosort(Klass* Lib, int choice);
+void first_inf_sort(Klass* Lib, int* support, int choice);
+void menu(Klass* Kmass, int klases);

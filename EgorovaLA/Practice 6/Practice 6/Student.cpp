@@ -2,13 +2,14 @@
 
 Student::Student(){
 	this -> numberK = 0;
-	this-> gender = "";
+	this->gender = MALE;
 }
 
-Student::Student(FIO &FIO,int numberK, string gender, Date &birth, Adress &adress) {
+Student::Student(FIO &FIO,int numberK, int gender, Date &birth, Adress &adress) {
 	this->fio = FIO;
 	this->numberK = numberK;
-	this->gender = gender;
+	if (gender==0) this->gender = MALE;
+	else this->gender = FEMALE;
 	this->birth = birth;
 	this->adress = adress;
 }
@@ -42,11 +43,12 @@ int Student::GetNum()const {
 void Student::SetNum(int num) {
 	this->numberK = num;
 }
-string Student::GetG()const {
+Gender Student::GetG()const {
 	return this->gender;
 }
-void Student::SetG(string G) {
-	this->gender = G;
+void Student::SetG(int G) {
+	if (G == 0) this->gender = MALE;
+	else this->gender = FEMALE;
 }
 Adress Student::GetAdress()const {
 	return this->adress;
@@ -54,11 +56,19 @@ Adress Student::GetAdress()const {
 void Student::SetAdress(Adress &a) {
 	this->adress = a;
 }
-Date Student::GetDate()const {
+Date Student::GetDate() {
 	return this->birth;
 }
 void Student::SetDate(Date &b) {
 	this->birth = b;
+}
+
+ifstream& operator >>(ifstream& in, Gender& G) {
+	char g;
+	in >> g;
+	if (g == 'Ì') G = MALE;
+	else G = FEMALE;
+	return in;
 }
 
 ifstream& operator >>(ifstream& in, Student& s) {

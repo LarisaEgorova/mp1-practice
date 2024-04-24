@@ -22,12 +22,24 @@ Klass::Klass(const Klass&K) {
 	}
 }
 
+void Klass::allocateK(int n) {
+	this->students = new Student[n];
+}
+
 void Klass::SetStudents(int n, Student& s) {
 	this->students[n] = s;
 }
 
 Student Klass::GetStudents(int n) const {
 	return this->students[n];
+}
+
+void Klass::SetCount(int c) {
+	this->count = c;
+}
+
+int Klass::GetCount() const {
+	return this->count;
 }
 
 ostream& operator <<(ostream& out, const Klass& K) {

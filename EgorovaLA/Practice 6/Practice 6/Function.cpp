@@ -1,18 +1,20 @@
 #include "Function.h"
 
-string* work_with_base(int klases, int& count) {
+int work_with_base(int klases, string* massfile) {
+	int count = 0;
 	ifstream in;
-	string *massfile=new string [klases];
-	for (int i=0; i<klases; i++){
+	for (int i=1; i<klases+1; i++){
 		string way = to_string(i) + ".txt";
 		in.open(way, ios_base::in);
 		if (!in.is_open()) {
 			cout<<"Неверный путь. Файла не существует\n";
 			continue;
 		}
+		massfile[i-1] = way;
 		count += 1;
 	}
-	return massfile;
+	in.close();
+	return count;
 }
 
 void changes(int ex, int i, Student &s) {
@@ -44,12 +46,6 @@ void changes(int ex, int i, Student &s) {
 		s.SetDate(d);
 		break;
 	case 4:
-		cout << "Сейчас " << s.GetG() << "\n";
-		cout << "Введите верный пол " << "\n";
-		cin >> changeS;
-		s.SetG(changeS);
-		break;
-	case 5:
 		cout << "Сейчас " << s.GetNum() << "\n";
 		cout << "Введите верный класс " << "\n";
 		cin >> change;
@@ -57,38 +53,41 @@ void changes(int ex, int i, Student &s) {
 	}
 }
 	
-int* append_klassmass(ifstream &in, int count, int klases, Klass &Kmass) {
+void append_klassmass(string* massfile, int klases, Klass* Kmass) {
+
 	Student s;
-	int* quantity = new int[klases];
+	ifstream in;
+	int count;
+
 	for (int i = 0; i < klases; i++) {
-		quantity[i] = 0;
-	}
-	for (int i = 0; i < count; i++) {
-		in >> s;
-		int f = 1;
-		while (f) {
-			try {
-				f=check_student(s, klases);
+		in.open(massfile[i]);
+		in >> count;
+		Kmass[i].SetCount(count);
+		Kmass[i].allocateK(count);
+
+		for (int j = 0; j < count; j++) {
+			in >> s;
+			int f = 1;
+			while (f) {
+				try {
+					f = check_student(s, klases);
+				}
+				catch (int ex) {
+					changes(ex, j, s);
+				}
 			}
-			catch (int ex) {
-				changes(ex, i, s);
-			}
+			Kmass[i].SetStudents(j, s);
 		}
-		int ks = s.GetNum();
-		quantity[ks - 1] += 1;
-		Kmass.SetStudents(i, s);
+		in.close();
 	}
-	in.close();
-	return quantity;
+	return ;
 }
 
 int check_student(Student &s, int klases) {
 	Date d;
 	d = s.GetDate();
-	string G = s.GetG();
 	int K = s.GetNum();
-	if (K<1 || K>klases) throw 5;
-	if (G != "Ж" && G != "М" && G != "ж" && G != "м") throw 4;
+	if (K<1 || K>klases) throw 4;
 	if (d.GetYear() > 2024 || d.GetYear() < 2000) throw 1;
 	if (d.GetMonth() > 12 || d.GetMonth() < 1) throw 2;
 	if (d.GetDay() < 1 || d.GetDay() >31 ||
@@ -99,50 +98,35 @@ int check_student(Student &s, int klases) {
 	return 0;
 }
 
-void separate_klassmass(int* quantity, Klass* Lib,Klass Kmass, int klases, int count) {
-	int* pos = new int[klases];
-	Student s;
-	for (int i = 0; i < klases; i++) {
-		pos[i] = 0;
-	}
-	for (int i = 0; i < count; i++) {
-		s = Kmass.GetStudents(i);
-		int n = s.GetNum();
-		Lib[n - 1].SetStudents(pos[n - 1]++, s);
-	}
-	delete[] pos;
-	return;
-}
-
-int* sorted_klases(int* quantity, int *support, Klass* Lib, int choice) {
-	FIO* fio = new FIO[quantity[choice - 1]];
-	for (int i = 0; i < quantity[choice - 1]; i++) {
+int* sorted_klases( int *support, Klass* Lib, int choice) {
+	FIO* fio = new FIO[Lib[choice - 1].GetCount()];
+	for (int i = 0; i < Lib[choice - 1].GetCount(); i++) {
 		support[i] = i;
 		fio[i] = Lib[choice - 1].GetStudents(i).GetFIO();
 	}
-	int right = quantity[choice - 1]-1;
+	int right = Lib[choice - 1].GetCount() - 1;
 	quick_sort(fio, support, 0, right);
 	delete[] fio;
 	return support;
 }
 
-void first_inf_nosort(Klass* Lib, int* quantity, int choice) {
-	for (int i = 0; i < quantity[choice - 1]; i++) {
-		cout << "ID: " << i+1 << " ФИО: " << Lib[choice - 1].GetStudents(i).GetFIO() << "\n" <<
-			"Класс: " << Lib[choice - 1].GetStudents(i).GetNum()<< "\n";
+void first_inf_nosort(Klass* Lib,  int choice) {
+	for (int i = 0; i < Lib[choice - 1].GetCount(); i++) {
+		cout << "ID: " << i+1 << " ФИО: " << Lib[choice - 1].GetStudents(i).GetFIO() << endl <<
+			"Класс: " << Lib[choice - 1].GetStudents(i).GetNum()<<"\n";
 	}
 	return;
 }
 
-void first_inf_sort(Klass* Lib, int* quantity, int *support, int choice) {
-	for (int i = 0; i < quantity[choice - 1]; i++) {
+void first_inf_sort(Klass* Lib, int *support, int choice) {
+	for (int i = 0; i < Lib[choice - 1].GetCount(); i++) {
 		cout <<"ID: "<< support[i]+1 << " ФИО: " << Lib[choice - 1].GetStudents(support[i]).GetFIO() << "\n" <<
 			"Класс: " << Lib[choice - 1].GetStudents(support[i]).GetNum() << "\n";
 	}
 	return;
 }
 
-void menu(Klass*Lib, int*quantity, int klases){
+void menu(Klass*Lib, int klases){
 	cout << "Вас приветствует база школьников 'Будущее России'\n" <<
 		"Вы можете ознакомиться с данными учеников со всей России\n" <<
 		"Все они разделены на классы\n";
@@ -159,7 +143,7 @@ void menu(Klass*Lib, int*quantity, int klases){
 			}
 			break;
 		}
-		int* support = new int[quantity[choice - 1]];
+		int* support = new int[Lib[choice - 1].GetCount()];
 		cout << "Вывести список как в базе или отсортированный?\n";
 		int type;
 		while (1) {
@@ -173,11 +157,11 @@ void menu(Klass*Lib, int*quantity, int klases){
 		}
 		switch (type) {
 		case 1:
-			first_inf_nosort(Lib, quantity, choice);
+			first_inf_nosort(Lib, choice);
 			break;
 		case 2:
-			support=sorted_klases(quantity, support, Lib, choice);
-			first_inf_sort(Lib, quantity, support, choice);
+			support=sorted_klases(support, Lib, choice);
+			first_inf_sort(Lib, support, choice);
 			break;
 		default:
 			break;
@@ -188,7 +172,7 @@ void menu(Klass*Lib, int*quantity, int klases){
 				"Введите уникальный ID ученика\n"
 				<< "Также можете посмотреть другой класс - (-1) или завершить работу (0)\n";
 			cin >> f;
-			if (f != -1 && f != 0 && f-1 <= quantity[choice-1]) {
+			if (f != -1 && f != 0 && f-1 <= Lib[choice - 1].GetCount()) {
 				cout << Lib[choice - 1].GetStudents(f-1)<<"\n";
 				continue;
 			}
