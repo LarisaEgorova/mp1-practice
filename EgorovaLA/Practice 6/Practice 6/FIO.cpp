@@ -18,32 +18,6 @@ FIO::FIO() {
 	this->Fathersname = "0";
 }
 
-string FIO :: GetName() const {
-	return this->Name;
-}
-string FIO::GetSurname() const {
-	return this->Surname;
-}
-string FIO::GetFathersname() const {
-	return this->Fathersname;
-}
-void FIO::SetName(string name){
-	this->Name =name;
-}
-void FIO::SetSurname(string surname){
-	this->Surname = surname;
-}
-void FIO::SetFathersname(string fathersname) {
-	this->Fathersname = fathersname;
-}
-
-const FIO& FIO:: operator =(const FIO&FIO) {
-	this->Surname = FIO.Surname;
-	this->Name = FIO.Name;
-	this->Fathersname = FIO.Fathersname;
-	return *this;
-}
-
 bool FIO:: operator <(const FIO& fio) {
 	return this->Surname < fio.Surname;
 }

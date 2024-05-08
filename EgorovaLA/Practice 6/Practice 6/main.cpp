@@ -1,4 +1,4 @@
-#include "Klass.h"
+#include "Journal.h"
 #include "Function.h"
 
 int main() {
@@ -24,18 +24,15 @@ int main() {
 	}
 
 	Student s;
-	Klass *Kmass =new Klass[count];
+	Journal Kmass(count);
 
-	append_klassmass(massfile, klases, Kmass);
+	append_klassmass(massfile, Kmass);
 	
-	menu(Kmass, klases);
+	menu(Kmass);
 	
 	cout << "Завершение...";
 
 	delete[] massfile;
-	for (int i = 0; i < klases; i++) {
-		Kmass[i].~Klass();
-	}
 
 	return 0;
 }

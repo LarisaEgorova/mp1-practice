@@ -129,8 +129,8 @@
   <ItemGroup>
     <ClCompile Include="Adress.cpp" />
     <ClCompile Include="Date.cpp" />
-    <ClCompile Include="Date.h" />
     <ClCompile Include="FIO.cpp" />
+    <ClCompile Include="Journal.cpp" />
     <ClCompile Include="Klass.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Function.cpp" />
@@ -138,7 +138,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Adress.h" />
+    <ClInclude Include="Date.h" />
     <ClInclude Include="FIO.h" />
+    <ClInclude Include="Journal.h" />
     <ClInclude Include="Klass.h" />
     <ClInclude Include="Function.h" />
     <ClInclude Include="Student.h" />

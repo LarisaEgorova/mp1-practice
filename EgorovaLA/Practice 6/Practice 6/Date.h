@@ -7,25 +7,26 @@
 
 using namespace std;
 
-class Date
-{
-public:
-	Date(int, int, int);
-	Date(const Date&);
-	Date();
-	int GetDay();
-	void SetDay(int) ;
-	int GetMonth();
-	void SetMonth(int) ;
-	int GetYear();
-	void SetYear(int);
-
-	const Date& operator =(const Date&);
-	friend ifstream& operator >>(ifstream& in, Date& date);
-	friend ostream& operator <<(ostream& out, const Date& date);
+class Date {
 
 private:
 	int day;
 	int month;
 	int year;
+public:
+	Date(int, int, int);
+	Date(const Date&);
+	Date();
+
+	int GetDay() const;
+	void SetDay(int);
+	int GetMonth() const;
+	void SetMonth(int);
+	int GetYear() const;
+	void SetYear(int);
+
+	friend ifstream& operator >>(ifstream& in, Date& date);
+	friend ostream& operator <<(ostream& out, const Date& date);
 };
+
+void changes(int ex, Date& d);

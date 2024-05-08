@@ -7,28 +7,21 @@
 
 using namespace std;
 
-class FIO
-{
-public:
-	FIO(string, string, string);
-	FIO(const FIO&);
-	FIO();
-	string GetName() const;
-	string GetSurname() const;
-	string GetFathersname() const;
-	void SetName(string);
-	void SetSurname(string);
-	void SetFathersname(string);
+class FIO {
 
-	friend ifstream& operator >>(ifstream& in, FIO& fio);
-	friend ostream& operator <<(ostream& out, const FIO& fio);
-	const FIO& operator =(const FIO&);
-	bool operator <(const FIO&);
-	bool operator >(const FIO&);
-private:
+public:
 	string Surname;
 	string Name;
 	string Fathersname;
+
+	FIO(string, string, string);
+	FIO(const FIO&);
+	FIO();
+
+	friend ifstream& operator >>(ifstream& in, FIO& fio);
+	friend ostream& operator <<(ostream& out, const FIO& fio);
+	bool operator <(const FIO&);
+	bool operator >(const FIO&);
 };
 
 

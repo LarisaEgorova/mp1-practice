@@ -81,7 +81,10 @@ ifstream& operator >>(ifstream& in, Student& s) {
 }
 
 ostream& operator <<(ostream& out, const Student& s) {
-	out<<"ФИО: " << s.fio << "Класс: " << s.numberK << endl << "Пол: " <<
-		s.gender << endl<<"Дата рождения: " << s.birth<<" Полный адрес \n" << s.adress;
+	out << "ФИО: " << s.fio << "Класс: " << s.numberK << endl << "Пол: ";
+		if (s.GetG() == MALE) out << "М";
+		else out << "Ж";
+		out<< endl<<"Дата рождения: " << s.birth<<" Полный адрес \n" << s.adress;
 	return out;
 }
+

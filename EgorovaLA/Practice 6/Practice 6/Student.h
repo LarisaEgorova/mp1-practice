@@ -35,3 +35,4 @@ private:
 	Date birth;
 	Adress adress;
 };
+

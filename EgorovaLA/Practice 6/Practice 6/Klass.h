@@ -12,9 +12,12 @@ public:
 	Student GetStudents(int) const;
 	void SetCount(int);
 	int GetCount() const;
-	void allocateK(int n);
+
+	const Klass& operator =(const Klass&);
 	friend ostream& operator <<(ostream& out, const Klass& K);
 private:
 	int count;
 	Student* students;
 };
+
+void quick_sort(FIO* arrs, int* support, int left, int right);
