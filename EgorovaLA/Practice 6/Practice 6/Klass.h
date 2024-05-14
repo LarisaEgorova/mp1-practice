@@ -14,7 +14,10 @@ public:
 	int GetCount() const;
 
 	const Klass& operator =(const Klass&);
+	friend ifstream& operator >>(ifstream& in, Klass& K);
 	friend ostream& operator <<(ostream& out, const Klass& K);
+	void Sort(int* support, int left, int right);
+
 private:
 	int count;
 	Student* students;

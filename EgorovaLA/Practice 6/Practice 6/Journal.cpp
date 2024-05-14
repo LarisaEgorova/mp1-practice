@@ -22,18 +22,18 @@ void Journal::SetKlass(int i, Klass& klass) {
 	this->klasses[i] = klass;
 }
 
-void first_inf_nosort(Journal& Kmass, int choice) {
-	for (int i = 0; i < Kmass.GetKlass(choice - 1).GetCount(); i++) {
-		cout << "ID: " << i + 1 << " ÔÈÎ: " << Kmass.GetKlass(choice - 1).GetStudents(i).GetFIO() << endl <<
-			"Êëàññ: " << Kmass.GetKlass(choice - 1).GetStudents(i).GetNum() << "\n";
+void Journal::first_inf_nosort(int choice) {
+	for (int i = 0; i < this->GetKlass(choice - 1).GetCount(); i++) {
+		cout << "ID: " << i + 1 << " ÔÈÎ: " << this->GetKlass(choice - 1).GetStudents(i).GetFIO() << endl <<
+			"Êëàññ: " << this->GetKlass(choice - 1).GetStudents(i).GetNum() << "\n";
 	}
 	return;
 }
 
-void first_inf_sort(Journal& Kmass, int* support, int choice) {
-	for (int i = 0; i < Kmass.GetKlass(choice - 1).GetCount(); i++) {
-		cout << "ID: " << support[i] + 1 << " ÔÈÎ: " << Kmass.GetKlass(choice - 1).GetStudents(support[i]).GetFIO() << "\n" <<
-			"Êëàññ: " << Kmass.GetKlass(choice - 1).GetStudents(support[i]).GetNum() << "\n";
+void Journal::first_inf_sort( int* support, int choice) {
+	for (int i = 0; i < this->GetKlass(choice - 1).GetCount(); i++) {
+		cout << "ID: " << support[i] + 1 << " ÔÈÎ: " << this->GetKlass(choice - 1).GetStudents(support[i]).GetFIO() << "\n" <<
+			"Êëàññ: " << this->GetKlass(choice - 1).GetStudents(support[i]).GetNum() << "\n";
 	}
 	return;
 }

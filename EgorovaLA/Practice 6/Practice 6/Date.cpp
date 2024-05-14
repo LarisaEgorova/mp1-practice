@@ -66,6 +66,7 @@ ostream& operator <<(ostream& out, const Date& date) {
 
 void changes(int ex, Date& d) {
 	cout << "У ученика некорректные данные, пожалуйста замените их на верные\n";
+	cout << d;
 	int change = 0;
 	string changeS = "";
 	switch (ex) {

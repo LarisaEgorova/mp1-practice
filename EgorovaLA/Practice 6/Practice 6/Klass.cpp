@@ -35,6 +35,19 @@ int Klass::GetCount() const {
 	return this->count;
 }
 
+ifstream& operator >>(ifstream& in, Klass& K) {
+	int count;
+	Student s;
+	in >> count;
+	K = Klass(count);
+	for (int j = 0; j < count; j++) {
+		int f = 1;
+		in >> s;
+		K.SetStudents(j, s);
+	}
+	return in;
+}
+
 ostream& operator <<(ostream& out, const Klass& K) {
 	for (int i = 0; i < K.count; i++) {
 		out << K.students[i] << endl;
@@ -49,6 +62,17 @@ const Klass& Klass :: operator =(const Klass& K) {
 		this->students[i] = K.students[i];
 	}
 	return *this;
+}
+
+void Klass:: Sort(int* support, int left, int right) {
+	FIO* fio = new FIO[this->GetCount()];
+	for (int i = 0; i < this->GetCount(); i++) {
+		support[i] = i;
+		fio[i] = this->GetStudents(i).GetFIO();
+	}
+	quick_sort(fio, support, 0, right);
+	delete[] fio;
+	return;
 }
 
 void quick_sort(FIO* arrs, int* support, int left, int right) {
