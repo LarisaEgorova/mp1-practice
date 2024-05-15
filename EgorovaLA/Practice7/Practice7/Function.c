@@ -58,6 +58,7 @@ void menu(Journal* Kmass) {
 				break;
 			}
 			if (f == 0) {
+				printf("Завершение..\n");
 				F = 0;
 				break;
 			}

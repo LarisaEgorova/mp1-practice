@@ -14,8 +14,8 @@ void fillAdress(Adress* adress,int indx, char* country, char* region,
 }
 
 void operatorEQAdress(Adress* a1, Adress *a2) {
-	allocateAdress(a1, strlen(a2->country), strlen(a2->region),
-		strlen(a2->city), strlen(a2->district), strlen(a2->street));
+	allocateAdress(a1, strlen(a2->country) + 1, strlen(a2->region) + 1,
+		strlen(a2->city) + 1, strlen(a2->district) + 1, strlen(a2->street) + 1);
 	fillAdress(a1,a2->indx, a2->country, a2->region,
 		a2->city, a2->district, a2->street,a2->house,a2->flat) ;
 }

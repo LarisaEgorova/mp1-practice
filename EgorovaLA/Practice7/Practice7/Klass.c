@@ -32,13 +32,13 @@ void fillKlass(Klass* klass, char* str, FILE* f) {
 			s1[j] = strpart;
 			strpart = strtok(NULL, "\t");
 		}
-		allocateFIO(&fio, strlen(s1[0]), strlen(s1[1]), strlen(s1[2]));
+		allocateFIO(&fio, strlen(s1[0]) + 1, strlen(s1[1]) + 1, strlen(s1[2]) + 1);
 		fillFIO(&fio, s1[0], s1[1], s1[2]);
 
 		fillDate(&date, atoi(s1[5]), atoi(s1[6]), atoi(s1[7]));
 
-		allocateAdress(&adress, strlen(s1[9]), strlen(s1[10]),
-			strlen(s1[11]), strlen(s1[12]), strlen(s1[13]));
+		allocateAdress(&adress, strlen(s1[9]) + 1, strlen(s1[10]) + 1,
+			strlen(s1[11]) + 1, strlen(s1[12]) + 1, strlen(s1[13]) + 1);
 		fillAdress(&adress, atoi(s1[8]), s1[9], s1[10],
 			s1[11], s1[12], s1[13], atoi(s1[14]), atoi(s1[15]));
 
@@ -49,9 +49,9 @@ void fillKlass(Klass* klass, char* str, FILE* f) {
 
 		append_student(klass, &student, i);
 
-		//deleteFIO(&fio);
-		//deleteAdress(&adress);
-		//deleteStudent(&student);
+		deleteFIO(&fio);
+		deleteAdress(&adress);
+		deleteStudent(&student);
 	}
 }
 

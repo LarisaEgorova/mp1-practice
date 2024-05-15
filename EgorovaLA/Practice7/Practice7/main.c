@@ -21,13 +21,7 @@ void main() {
 
 	menu(&Kmass);
 
-	/*for (int i = 0; i < klases; i++) {
-		for (int j = 0; j < Klassmass[i].count; j++) {
-			deleteStudent(&Klassmass[i].students[j]);
-		}
-		free(&Klassmass[i].students);
-	}
-	free(Klassmass);*/
+	deleteJournal(&Kmass);
 
 	return;
 }

@@ -7,6 +7,7 @@ typedef struct {
 } Journal;
 
 void allocateJournal(Journal* Kmass, int klasses);
+void deleteJournal(Journal*);
 int fillJournal(Journal* Kmass);
 void first_inf_nosort(Klass* Klass);
-void first_inf_sort(Klass* Klassmass, int* support);
+void first_inf_sort(Klass* Klass, int* support);

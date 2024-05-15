@@ -32,6 +32,12 @@
     <ClCompile Include="Date.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Journal.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Journal.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Function.h">

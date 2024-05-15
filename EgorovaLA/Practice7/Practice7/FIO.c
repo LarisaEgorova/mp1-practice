@@ -7,8 +7,8 @@ void fillFIO(FIO* fio , char* surname, char* name, char* fathersname) {
 }
 
 void operatorEQFIO(FIO* fio1, FIO *fio2) {
-	allocateFIO(fio1, strlen(fio2->Surname),
-		strlen(fio2->Name), strlen(fio2->Fathersname));
+	allocateFIO(fio1, strlen(fio2->Surname) + 1,
+		strlen(fio2->Name) + 1, strlen(fio2->Fathersname) + 1);
 	fillFIO(fio1, fio2->Surname, fio2->Name,fio2->Fathersname);
 }
 
