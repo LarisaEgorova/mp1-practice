@@ -13,6 +13,7 @@ public:
 	void SetCount(int);
 	Klass GetKlass(int) const;
 	void SetKlass(int, Klass&);
+	int fillJournal();
 	void first_inf_nosort(int choice);
 	void first_inf_sort(int* support, int choice);
 };

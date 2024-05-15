@@ -14,7 +14,7 @@ int main() {
 	Student s;
 	Journal Kmass(klases);
 
-	if (append_klassmass(Kmass) == -1) return 0;
+	if (Kmass.fillJournal() == -1) return 0;
 	
 	menu(Kmass);
 	

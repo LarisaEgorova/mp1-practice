@@ -1,25 +1,5 @@
 #include "Function.h"
 
-int append_klassmass(Journal& Kmass) {
-
-	Klass klass;
-	ifstream in;
-	string file;
-	int count;
-
-	for (int i = 0; i < Kmass.GetCount(); i++) {
-		file = to_string(i+1) + ".txt";
-		in.open(file);
-		if (!in.is_open()) {
-			cout << "Неверный путь. Файла не существует\n";
-			return -1;
-		}
-		in >> klass;
-		Kmass.SetKlass(i, klass);
-		in.close();
-	}
-	return 0;
-}
 
 void menu(Journal& Kmass){
 	cout << "Вас приветствует база школьников 'Будущее России'\n" <<
@@ -68,7 +48,7 @@ void menu(Journal& Kmass){
 				"Введите уникальный ID ученика\n"
 				<< "Также можете посмотреть другой класс - (-1) или завершить работу (0)\n";
 			cin >> f;
-			if (f != -1 && f != 0 && f-1 <= Kmass.GetKlass(choice - 1).GetCount()) {
+			if (f != -1 && f != 0 && f <= Kmass.GetKlass(choice - 1).GetCount()) {
 				cout << Kmass.GetKlass(choice-1).GetStudents(f-1)<<"\n";
 				continue;
 			}
