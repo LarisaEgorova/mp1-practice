@@ -18,6 +18,5 @@ typedef struct {
 void fillAdress(Adress*,int, char*, char*, char*, char*, char*, int, int);
 void printAdress(Adress*);
 void operatorEQAdress(Adress* a1, Adress* a2);
-void allocateAdress(Adress* a, int lencountry, int lenregion, int lencity, int lendis, int lenstreet);
-//void reallocAdress(Adress* fio, int lencountry, int lenregion, int lencity, int lendis, int lenstreet);
+void allocateAdress(Adress*, int , int , int , int , int );
 void deleteAdress(Adress* adress);

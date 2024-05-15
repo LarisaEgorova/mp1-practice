@@ -8,5 +8,7 @@ typedef struct {
 } Klass;
 
 void allocate(Klass* K, int n);
-void fillKlass(Klass* K, Student *S, int pos);
+void append_student(Klass* K, Student* S2, int pos);
+void fillKlass(Klass* klass, char* str, FILE* f);
+void Sort(int* support, Klass* klass);
 void quick_sort(FIO* arrs, FIO*, FIO*, int* support, int left, int right);

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -131,6 +131,8 @@
     <ClCompile Include="Date.c" />
     <ClCompile Include="FIO.c" />
     <ClCompile Include="Function.c" />
+    <ClCompile Include="Journal.c" />
+    <ClCompile Include="Journal.h" />
     <ClCompile Include="Klass.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Student.c" />

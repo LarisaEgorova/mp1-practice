@@ -40,17 +40,6 @@ void printAdress(Adress*adress) {
 		adress->house, adress->flat);
 }
 
-/*void reallocAdress(Adress* adress, int lencountry, int lenregion,
-	int lencity, int lendis, int lenstreet) {
-
-	adress->country = realloc(adress->country, lencountry * sizeof(char));
-	adress->region = realloc(adress->region, lencountry * sizeof(char));
-	adress->city = realloc(adress->city, lencountry * sizeof(char));
-	adress->district = realloc(adress->district, lencountry * sizeof(char));
-	adress->street = realloc(adress->street, lencountry * sizeof(char));
-}*/
-
-
 void deleteAdress(Adress* adress) {
 	free(adress->country);
 	free(adress->region);

@@ -14,6 +14,7 @@ typedef struct {
 void fillFIO(FIO*, char*, char*, char*);
 void printFIO(FIO* fio);
 void operatorEQFIO(FIO* fio1, FIO *fio2);
-void allocateFIO(FIO* fio, int surname, int name, int fathersname);
-//void reallocFIO(FIO* fio, int surname, int name, int fathersname);
+void allocateFIO(FIO* fio, int , int , int );
+int operatorMore(FIO* fio1, FIO* fio2);
+int operatorLess(FIO* fio1, FIO* fio2);
 void deleteFIO(FIO* fio);

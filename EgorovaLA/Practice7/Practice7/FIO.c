@@ -18,11 +18,39 @@ void allocateFIO(FIO* fio, int surname, int name, int fathersname) {
 	fio->Fathersname = (char*)malloc(fathersname * sizeof(char));
 }
 
-/*void reallocFIO(FIO* fio, int surname, int name, int fathersname) {
-	fio->Surname = realloc(fio->Surname, surname * sizeof(char));
-	fio->Name = realloc(fio->Name, name * sizeof(char));
-	fio->Fathersname = realloc(fio->Fathersname, fathersname * sizeof(char));
-}*/
+int operatorMore(FIO* fio1, FIO* fio2) {
+	if (strcmp(fio1->Surname, fio2->Surname) > 0) {
+		return 1;
+	}
+	if (strcmp(fio1->Surname, fio2->Surname) == 0) {
+		if (strcmp(fio1->Name, fio2->Name) > 0) {
+			return 1;
+		}
+		if (strcmp(fio1->Name, fio2->Name) == 0) {
+			if (strcmp(fio1->Fathersname, fio2->Fathersname) > 0) {
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
+int operatorLess(FIO* fio1, FIO* fio2) {
+	if (strcmp(fio1->Surname, fio2->Surname) < 0) {
+		return 1;
+	}
+	if (strcmp(fio1->Surname, fio2->Surname) == 0) {
+		if (strcmp(fio1->Name, fio2->Name) < 0) {
+			return 1;
+		}
+		if (strcmp(fio1->Name, fio2->Name) == 0) {
+			if (strcmp(fio1->Fathersname, fio2->Fathersname) < 0) {
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
 
 void printFIO(FIO* fio) {
 	printf("ÔÈÎ: %s %s %s\n", fio->Surname, fio->Name, fio->Fathersname);
