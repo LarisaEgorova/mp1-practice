@@ -14,14 +14,14 @@ public:
 	string Name;
 	string Fathersname;
 
-	FIO(string, string, string);
+	FIO(const string&, const string&, const string&);
 	FIO(const FIO&);
 	FIO();
 
 	friend ifstream& operator >>(ifstream& in, FIO& fio);
 	friend ostream& operator <<(ostream& out, const FIO& fio);
-	bool operator <(const FIO&);
-	bool operator >(const FIO&);
+	bool operator <(const FIO&) const;
+	bool operator >(const FIO&) const;
 };
 
 

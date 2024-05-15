@@ -22,12 +22,6 @@ Klass::Klass(const Klass&K) {
 	}
 }
 
-void Klass::SetStudents(int n, Student& s) {
-	this->students[n] = s;
-}
-Student Klass::GetStudents(int n) const {
-	return this->students[n];
-}
 void Klass::SetCount(int c) {
 	this->count = c;
 }
@@ -43,7 +37,7 @@ ifstream& operator >>(ifstream& in, Klass& K) {
 	for (int j = 0; j < count; j++) {
 		int f = 1;
 		in >> s;
-		K.SetStudents(j, s);
+		K[j] = s;
 	}
 	return in;
 }
@@ -64,18 +58,19 @@ const Klass& Klass :: operator =(const Klass& K) {
 	return *this;
 }
 
-void Klass:: Sort(int* support, int left, int right) {
+int* Klass::SortIndeces() const {
+	int* indeces = new int[this->count];
 	FIO* fio = new FIO[this->GetCount()];
 	for (int i = 0; i < this->GetCount(); i++) {
-		support[i] = i;
-		fio[i] = this->GetStudents(i).GetFIO();
+		indeces[i] = i;
+		fio[i] = (*this)[i].GetFIO();
 	}
-	quick_sort(fio, support, 0, right);
-	delete[] fio;
-	return;
+
+	quick_sort(fio, indeces, 0, this->count - 1);
+	return indeces;
 }
 
-void quick_sort(FIO* arrs, int* support, int left, int right) {
+void Klass::quick_sort(FIO* arrs, int* support, int left, int right) const {
 	int centric = left + (right - left) / 2;
 	FIO center_el = arrs[centric];
 	int lt = left;

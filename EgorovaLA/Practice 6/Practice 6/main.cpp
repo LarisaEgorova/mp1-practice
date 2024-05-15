@@ -1,3 +1,4 @@
+#include <Windows.h>
 #include "Journal.h"
 #include "Function.h"
 
@@ -11,9 +12,7 @@ int main() {
 	cout << "¬ведите количество классов\n";
 	cin >> klases;
 
-	Student s;
 	Journal Kmass(klases);
-
 	if (Kmass.fillJournal() == -1) return 0;
 	
 	menu(Kmass);

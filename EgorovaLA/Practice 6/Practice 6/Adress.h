@@ -19,8 +19,8 @@ public:
 	int house;
 	int flat;
 
-	Adress(int, string, string, string,
-		string, string, int, int);
+	Adress(int, const string&, const string&, const string&,
+		const string&, const string&, int, int);
 	Adress(const Adress&);
 	Adress();
 
