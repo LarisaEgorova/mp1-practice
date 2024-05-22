@@ -1,7 +1,7 @@
 #include "Adress.h"
 
-Adress::Adress(int indx, string country, string region, string city,
-	string district, string street, int house, int flat)
+Adress::Adress(int indx,const string& country, const string& region, const string& city,
+	const string& district, const string& street, int house, int flat)
 {
 	this->indx = indx;
 	this->country = country;

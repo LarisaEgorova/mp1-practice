@@ -15,11 +15,12 @@ int Journal::GetCount() const {
 void Journal::SetCount(int count) {
 	this->count = count;
 }
-Klass Journal::GetKlass(int i) const {
-	return this->klasses[i];
+
+Klass& Journal:: operator[](int idx) {
+	return (idx >= 0 && idx < count) ? klasses[idx] : throw "Out of range";
 }
-void Journal::SetKlass(int i, Klass& klass) {
-	this->klasses[i] = klass;
+Klass& Journal:: operator[](int idx) const {
+	return (idx >= 0 && idx < count) ? klasses[idx] : throw "Out of range";
 }
 
 int Journal::fillJournal() {
@@ -27,7 +28,6 @@ int Journal::fillJournal() {
 	Klass klass;
 	ifstream in;
 	string file;
-	int count;
 
 	for (int i = 0; i < this->GetCount(); i++) {
 		file = to_string(i + 1) + ".txt";
@@ -37,24 +37,21 @@ int Journal::fillJournal() {
 			return -1;
 		}
 		in >> klass;
-		this->SetKlass(i, klass);
+		(*this)[i] = klass;
 		in.close();
 	}
 	return 0;
 }
 
-void Journal::first_inf_nosort(int choice) {
-	for (int i = 0; i < this->GetKlass(choice - 1).GetCount(); i++) {
-		cout << "ID: " << i + 1 << " ÔÈÎ: " << this->GetKlass(choice - 1).GetStudents(i).GetFIO() << endl <<
-			"Êëàññ: " << this->GetKlass(choice - 1).GetStudents(i).GetNum() << "\n";
-	}
-	return;
-}
+void Journal::first_inf_sort(int choice) {
+	int* support = (*this)[choice - 1].SortIndeces();
 
-void Journal::first_inf_sort( int* support, int choice) {
-	for (int i = 0; i < this->GetKlass(choice - 1).GetCount(); i++) {
-		cout << "ID: " << support[i] + 1 << " ÔÈÎ: " << this->GetKlass(choice - 1).GetStudents(support[i]).GetFIO() << "\n" <<
-			"Êëàññ: " << this->GetKlass(choice - 1).GetStudents(support[i]).GetNum() << "\n";
+	cout << "ID\t" << "Êëàññ\t" << "ÔÈÎ" << endl;
+	for (int i = 0; i < this->klasses[choice-1].GetCount(); i++) {
+		cout << support[i]+1 << "\t" << (*this)[choice-1][support[i]].GetNum() << "\t" <<
+			(*this)[choice - 1][support[i]].GetFIO() << endl;
 	}
+
+	delete[] support;
 	return;
 }

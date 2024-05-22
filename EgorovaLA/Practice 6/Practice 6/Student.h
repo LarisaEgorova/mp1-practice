@@ -28,6 +28,7 @@ public:
 	friend ostream& operator <<(ostream& out, const Student& s);
 	const Student& operator =(const Student&);
 
+
 private:
 	FIO fio;
 	int numberK;

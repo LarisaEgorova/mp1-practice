@@ -1,5 +1,4 @@
 #include <Windows.h>
-#include "Journal.h"
 #include "Function.h"
 
 int main() {

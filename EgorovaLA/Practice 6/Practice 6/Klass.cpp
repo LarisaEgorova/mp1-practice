@@ -29,6 +29,14 @@ int Klass::GetCount() const {
 	return this->count;
 }
 
+Student& Klass::operator[](int idx) {
+	return (idx >= 0 && idx < count) ? students[idx] : throw "Out of range";
+}
+
+Student& Klass::operator[](int idx) const {
+	return (idx >= 0 && idx < count) ? students[idx] : throw "Out of range";
+}
+
 ifstream& operator >>(ifstream& in, Klass& K) {
 	int count;
 	Student s;
@@ -43,8 +51,10 @@ ifstream& operator >>(ifstream& in, Klass& K) {
 }
 
 ostream& operator <<(ostream& out, const Klass& K) {
+	out << "ID\t" << "Êëàññ\t" << "ÔÈÎ" << endl;
 	for (int i = 0; i < K.count; i++) {
-		out << K.students[i] << endl;
+		out << i + 1 << "\t" << K.students[i].GetNum() << "\t" <<
+			K.students[i].GetFIO() << endl;
 	}
 	return out;
 }
@@ -65,8 +75,8 @@ int* Klass::SortIndeces() const {
 		indeces[i] = i;
 		fio[i] = (*this)[i].GetFIO();
 	}
-
 	quick_sort(fio, indeces, 0, this->count - 1);
+	delete [] fio;
 	return indeces;
 }
 

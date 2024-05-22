@@ -1,6 +1,6 @@
 #include "FIO.h"
 
-FIO::FIO(string Surname , string Name, string Fathersname) {
+FIO::FIO(const string& Surname , const string& Name, const string &Fathersname) {
 	this->Surname = Surname;
 	this->Name = Name;
 	this->Fathersname = Fathersname;
@@ -18,11 +18,11 @@ FIO::FIO() {
 	this->Fathersname = "0";
 }
 
-bool FIO:: operator <(const FIO& fio) {
+bool FIO:: operator <(const FIO& fio) const{
 	return this->Surname < fio.Surname;
 }
 
-bool FIO:: operator >(const FIO& fio) {
+bool FIO:: operator >(const FIO& fio) const {
 	return this->Surname > fio.Surname;
 }
 

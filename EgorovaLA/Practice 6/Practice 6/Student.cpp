@@ -5,7 +5,7 @@ Student::Student(){
 	this->gender = MALE;
 }
 
-Student::Student(FIO &FIO,int numberK, int gender, Date &birth, Adress &adress) {
+Student::Student(const FIO &FIO,int numberK, int gender, const Date &birth, const Adress &adress) {
 	this->fio = FIO;
 	this->numberK = numberK;
 	if (gender==0) this->gender = MALE;
@@ -34,7 +34,7 @@ const Student& Student :: operator =(const Student&st) {
 FIO Student :: GetFIO()const {
 	return this->fio;
 }
-void Student::SetFIO(FIO &fio){
+void Student::SetFIO(const FIO &fio){
 	this->fio = fio;
 }
 int Student::GetNum()const {
@@ -53,13 +53,13 @@ void Student::SetG(int G) {
 Adress Student::GetAdress()const {
 	return this->adress;
 }
-void Student::SetAdress(Adress &a) {
+void Student::SetAdress(const Adress &a) {
 	this->adress = a;
 }
 Date Student::GetDate() {
 	return this->birth;
 }
-void Student::SetDate(Date &b) {
+void Student::SetDate(const Date &b) {
 	this->birth = b;
 }
 

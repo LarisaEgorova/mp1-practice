@@ -1,6 +1,5 @@
 #include "Function.h"
 
-
 void menu(Journal& Kmass){
 	cout << "Вас приветствует база школьников 'Будущее России'\n" <<
 		"Вы можете ознакомиться с данными учеников со всей России\n" <<
@@ -18,7 +17,6 @@ void menu(Journal& Kmass){
 			}
 			break;
 		}
-		int* support = new int[Kmass.GetKlass(choice - 1).GetCount()];
 		cout << "Вывести список как в базе или отсортированный?\n";
 		int type;
 		while (1) {
@@ -32,12 +30,10 @@ void menu(Journal& Kmass){
 		}
 		switch (type) {
 		case 1:
-			Kmass.first_inf_nosort(choice);
+			cout << Kmass[choice-1];
 			break;
 		case 2:
-			Kmass.GetKlass(choice - 1)
-				.Sort(support, 0, Kmass.GetKlass(choice - 1).GetCount()-1);
-			Kmass.first_inf_sort(support, choice);
+			Kmass.first_inf_sort(choice);
 			break;
 		default:
 			break;
@@ -48,8 +44,8 @@ void menu(Journal& Kmass){
 				"Введите уникальный ID ученика\n"
 				<< "Также можете посмотреть другой класс - (-1) или завершить работу (0)\n";
 			cin >> f;
-			if (f != -1 && f != 0 && f <= Kmass.GetKlass(choice - 1).GetCount()) {
-				cout << Kmass.GetKlass(choice-1).GetStudents(f-1)<<"\n";
+			if (f != -1 && f != 0 && f <= Kmass[choice - 1].GetCount()) {
+				cout << Kmass[choice-1][f-1]<<"\n";
 				continue;
 			}
 			if (f == -1) {
@@ -64,6 +60,5 @@ void menu(Journal& Kmass){
 				continue;
 			}
 		}
-		delete[] support;
 	}
 }
