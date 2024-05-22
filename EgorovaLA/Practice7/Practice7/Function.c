@@ -69,4 +69,5 @@ void menu(Journal* Kmass) {
 		}
 	}
 	free(support);
+	deleteJournal(Kmass);
 }

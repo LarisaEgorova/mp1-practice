@@ -21,8 +21,6 @@ void main() {
 
 	menu(&Kmass);
 
-	deleteJournal(&Kmass);
-
 	return;
 }
 

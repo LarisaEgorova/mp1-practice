@@ -13,9 +13,7 @@ void deleteJournal(Journal* Kmass) {
 		for (int j = 0; j < Kmass->klasses[i].count; j++) {
 			deleteStudent(&Kmass->klasses[i].students[j]);
 		}
-		free(&Kmass->klasses[i].students);
 	}
-	free(&Kmass->klasses);
 }
 
 int fillJournal(Journal* Kmass) {

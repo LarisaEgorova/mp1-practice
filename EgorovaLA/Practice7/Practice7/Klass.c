@@ -74,12 +74,12 @@ void Sort(int* support, Klass* klass) {
 	right = count - 1;
 	quick_sort(massfio, &center_el, &swap, support, 0, right);
 
-	/*for (int i = 0; i < count; i++) {
+	for (int i = 0; i < count; i++) {
 		deleteFIO(&massfio[i]);
 	}
 	free(massfio);
 	deleteFIO(&center_el);
-	deleteFIO(&swap);*/
+	deleteFIO(&swap);
 }
 
 void quick_sort(FIO* arrs, FIO* center_el, FIO* swap, int* support, int left, int right) {
