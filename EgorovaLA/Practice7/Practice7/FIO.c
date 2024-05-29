@@ -53,7 +53,7 @@ int operatorLess(FIO* fio1, FIO* fio2) {
 }
 
 void printFIO(FIO* fio) {
-	printf("ÔÈÎ: %s %s %s\n", fio->Surname, fio->Name, fio->Fathersname);
+	printf("%s %s %s\n", fio->Surname, fio->Name, fio->Fathersname);
 }
 
 void deleteFIO(FIO* fio) {

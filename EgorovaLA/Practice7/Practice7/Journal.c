@@ -35,18 +35,20 @@ int fillJournal(Journal* Kmass) {
 }
 
 void first_inf_nosort(Klass* Klass) {
+	printf("ID \t  Î‡Òc\t ‘»Œ\n");
 	for (int i = 0; i < Klass->count; i++) {
-		printf("ID %d	", i + 1);
-		printf(" Î‡ÒÒ: %d\n", Klass->students[i].numberK);
+		printf("%d\t", i + 1);
+		printf("%d\t", Klass->students[i].numberK);
 		printFIO(&Klass->students[i].fio);
 	}
 	return;
 }
 
 void first_inf_sort(Klass* Klass, int* support) {
+	printf("ID \t  Î‡Òc\t ‘»Œ\n");
 	for (int i = 0; i < Klass->count; i++) {
-		printf("ID %d	", support[i] + 1);
-		printf(" Î‡ÒÒ: %d\n", Klass->students[support[i]].numberK);
+		printf("%d\t", support[i] + 1);
+		printf("%d\t", Klass->students[support[i]].numberK);
 		printFIO(&Klass->students[support[i]].fio);
 	}
 	return;
