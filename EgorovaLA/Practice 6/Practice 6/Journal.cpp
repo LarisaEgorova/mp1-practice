@@ -48,8 +48,8 @@ void Journal::first_inf_sort(int choice) {
 
 	cout << "ID\t" << "Êëàññ\t" << "ÔÈÎ" << endl;
 	for (int i = 0; i < this->klasses[choice-1].GetCount(); i++) {
-		cout << support[i]+1 << "\t" << (*this)[choice-1][support[i]].GetNum() << "\t" <<
-			(*this)[choice - 1][support[i]].GetFIO() << endl;
+		cout << support[i]+1 << "\t" << (*this)[choice-1][support[i]].GetNum()
+			<< "\t" <<(*this)[choice - 1][support[i]].GetFIO() << endl;
 	}
 
 	delete[] support;

@@ -19,11 +19,37 @@ FIO::FIO() {
 }
 
 bool FIO:: operator <(const FIO& fio) const{
-	return this->Surname < fio.Surname;
+	if (this->Surname < fio.Surname) {
+		return this->Surname < fio.Surname;
+	}
+	if (this->Surname == fio.Surname) {
+		if (this->Name < fio.Name) {
+			return this->Name < fio.Name;
+		}
+		if (this->Name == fio.Name) {
+			if (this->Fathersname < fio.Fathersname) {
+				return this->Fathersname < fio.Fathersname;
+			}
+		}
+	}
+	return 0;
 }
 
 bool FIO:: operator >(const FIO& fio) const {
-	return this->Surname > fio.Surname;
+	if (this->Surname > fio.Surname) {
+		return this->Surname > fio.Surname;
+	}
+	if (this->Surname == fio.Surname) {
+		if (this->Name > fio.Name) {
+			return this->Name > fio.Name;
+		}
+		if (this->Name == fio.Name) {
+			if (this->Fathersname > fio.Fathersname) {
+				return this->Fathersname > fio.Fathersname;
+			}
+		}
+	}
+	return 0;
 }
 
 ifstream& operator >>(ifstream& in, FIO& fio) {
